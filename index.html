@@ -1411,8 +1411,8 @@
   slide8.addEventListener('mousemove', (e) => {
     if (currentSlide !== 8) return;
     const rect = slide8.getBoundingClientRect();
-    targetX = Math.max(0, Math.min(e.clientX - rect.left - 60, rect.width - 120));
-    targetY = Math.max(0, Math.min(e.clientY - rect.top - 60, rect.height - 120));
+    targetX = e.clientX - rect.left - 60;
+    targetY = e.clientY - rect.top - 60;
     if (!rafId) {
       rafId = requestAnimationFrame(() => {
         qMark.style.transform = 'translate(' + targetX + 'px,' + targetY + 'px)';
