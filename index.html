@@ -67,29 +67,9 @@
     visibility: visible;
   }
 
-  /* Element Animations */
+  /* Element Animations — unified fade-up style */
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeInLeft {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes fadeInRight {
-    from { opacity: 0; transform: translateX(30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.85); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-20px); }
+    from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes glowPulse {
@@ -104,12 +84,12 @@
     opacity: 1;
   }
   .slide.active .anim.animating { animation-fill-mode: forwards; }
-  .slide.active .anim-fade-up.animating { animation: fadeInUp 0.7s ease forwards; }
-  .slide.active .anim-fade-left.animating { animation: fadeInLeft 0.7s ease forwards; }
-  .slide.active .anim-fade-right.animating { animation: fadeInRight 0.7s ease forwards; }
-  .slide.active .anim-scale.animating { animation: scaleIn 0.6s ease forwards; }
-  .slide.active .anim-fade.animating { animation: fadeIn 0.5s ease forwards; }
-  .slide.active .anim-slide-down.animating { animation: slideDown 0.6s ease forwards; }
+  .slide.active .anim-fade-up.animating,
+  .slide.active .anim-fade-left.animating,
+  .slide.active .anim-fade-right.animating,
+  .slide.active .anim-scale.animating,
+  .slide.active .anim-fade.animating,
+  .slide.active .anim-slide-down.animating { animation: fadeInUp 0.6s ease forwards; }
 
   .slide.active .anim.animating.d1 { animation-delay: 0.1s; }
   .slide.active .anim.animating.d2 { animation-delay: 0.2s; }
@@ -134,28 +114,21 @@
 
   .top-bar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 24px 60px 0;
+    padding: clamp(12px, 2vh, 24px) clamp(24px, 4vw, 60px) 0;
     position: relative; z-index: 2;
     flex-shrink: 0;
   }
   .top-bar .logo {
     font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 24px;
+    font-weight: 700; font-size: clamp(18px, 1.6vw, 24px);
   }
   .top-bar .slide-num {
-    font-size: 16px; color: var(--gray);
-  }
-  @keyframes sweepRight {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+    font-size: clamp(12px, 1.1vw, 16px); color: var(--gray);
   }
   .accent-bar {
-    height: 6px; width: 100%; background: var(--accent);
+    height: 6px; background: var(--accent);
     flex-shrink: 0; transform-origin: left center;
-  }
-  /* Override anim-fade for accent-bar — use sweep instead */
-  .slide.active .accent-bar.anim.animating {
-    animation: sweepRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .accent-bar-left {
     position: absolute; left: 0; top: 0;
@@ -163,19 +136,19 @@
   }
   .bottom-bar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0 60px 24px;
-    font-size: 14px; color: var(--gray);
+    padding: 0 clamp(24px, 4vw, 60px) clamp(12px, 2vh, 24px);
+    font-size: clamp(11px, 1vw, 14px); color: var(--gray);
     margin-top: auto;
     flex-shrink: 0;
-    min-height: 54px;
+    min-height: clamp(36px, 4vh, 54px);
   }
   .bottom-bar .copy {
     font-family: 'Space Grotesk', sans-serif; font-weight: 500;
   }
   .section-label {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px; font-weight: 700;
-    color: var(--accent); letter-spacing: 3px;
+    font-size: clamp(10px, 0.9vw, 13px); font-weight: 700;
+    color: var(--accent); letter-spacing: clamp(1.5px, 0.2vw, 3px);
     text-transform: uppercase;
   }
   .slide-title {
@@ -238,48 +211,48 @@
 
   /* ============= SLIDE 1 ============= */
   .s1-content {
-    flex: 1; display: flex; padding: 0 60px;
+    flex: 1; display: flex; padding: 0 clamp(24px, 4vw, 60px);
     position: relative;
   }
   .s1-main {
     display: flex; flex-direction: column;
-    justify-content: center; gap: 32px;
+    justify-content: center; gap: clamp(16px, 2.5vh, 32px);
     max-width: 1100px; z-index: 2;
   }
   .s1-badge {
     display: inline-flex;
     background: var(--accent-20);
-    padding: 8px 20px; border-radius: 4px;
+    padding: clamp(4px, 0.6vh, 8px) clamp(10px, 1.4vw, 20px); border-radius: 4px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 500;
-    color: var(--accent); letter-spacing: 2.5px;
+    font-size: clamp(10px, 1vw, 14px); font-weight: 500;
+    color: var(--accent); letter-spacing: clamp(1.5px, 0.2vw, 2.5px);
     width: fit-content;
   }
   .s1-title {
-    font-size: clamp(40px, 5vw, 80px);
+    font-size: clamp(32px, 5vw, 80px);
   }
   .s1-subtitle {
-    font-size: clamp(18px, 2vw, 28px); color: var(--light-gray);
+    font-size: clamp(14px, 1.8vw, 28px); color: var(--light-gray);
   }
   .s1-pillars {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(8px, 1.2vh, 16px);
     max-width: 900px;
   }
   .s1-pillar {
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: clamp(6px, 0.8vw, 12px);
     padding: 4px 0 4px 12px;
     border-left: 2px solid var(--accent);
   }
   .s1-pillar-num {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 24px; font-weight: 700; color: var(--accent);
+    font-size: clamp(16px, 1.7vw, 24px); font-weight: 700; color: var(--accent);
   }
   .s1-pillar-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 17px; font-weight: 600;
+    font-size: clamp(13px, 1.2vw, 17px); font-weight: 600;
   }
   .s1-pillar-desc {
-    font-size: 13px; color: var(--gray); line-height: 1.3;
+    font-size: clamp(10px, 0.9vw, 13px); color: var(--gray); line-height: 1.3;
   }
   .s1-right-panel {
     position: absolute; right: 0; top: 120px;
@@ -299,8 +272,8 @@
 
   /* ============= SLIDE 2 ============= */
   .s2-content {
-    flex: 1; display: flex; gap: 32px;
-    padding: 0 80px; overflow: hidden;
+    flex: 1; display: flex; gap: clamp(16px, 2.2vw, 32px);
+    padding: 0 clamp(24px, 5vw, 80px); overflow: hidden;
     min-height: 0;
   }
   .s2-col {
@@ -311,24 +284,24 @@
   .s2-col::-webkit-scrollbar { display: none; }
   .s2-col-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px; font-weight: 700;
+    font-size: clamp(15px, 1.4vw, 20px); font-weight: 700;
   }
   .s2-table {
     border: 1px solid #0D0D0D15; border-radius: 8px;
     overflow: hidden;
   }
   .s2-table-header {
-    display: grid; grid-template-columns: 180px 100px 1fr;
-    background: #F5F5F5; padding: 8px 12px; gap: 8px;
-    font-size: 13px; font-weight: 700;
+    display: grid; grid-template-columns: clamp(100px, 12vw, 180px) clamp(60px, 7vw, 100px) 1fr;
+    background: #F5F5F5; padding: clamp(4px, 0.6vh, 8px) clamp(8px, 0.8vw, 12px); gap: clamp(4px, 0.6vw, 8px);
+    font-size: clamp(10px, 0.9vw, 13px); font-weight: 700;
   }
   .s2-table-row {
-    display: grid; grid-template-columns: 180px 100px 1fr;
-    padding: 8px 12px; gap: 8px; border-top: 1px solid #0D0D0D10;
-    font-size: 14px;
+    display: grid; grid-template-columns: clamp(100px, 12vw, 180px) clamp(60px, 7vw, 100px) 1fr;
+    padding: clamp(4px, 0.6vh, 8px) clamp(8px, 0.8vw, 12px); gap: clamp(4px, 0.6vw, 8px); border-top: 1px solid #0D0D0D10;
+    font-size: clamp(11px, 1vw, 14px);
   }
-  .s2-table-row .comp { color: var(--accent); font-weight: 700; font-size: 15px; }
-  .s2-table-row .scope { color: #0D0D0D99; font-size: 13px; }
+  .s2-table-row .comp { color: var(--accent); font-weight: 700; font-size: clamp(11px, 1vw, 15px); }
+  .s2-table-row .scope { color: #0D0D0D99; font-size: clamp(10px, 0.9vw, 13px); }
   .s2-rec {
     display: flex; gap: 12px; align-items: flex-start;
   }
@@ -392,7 +365,7 @@
 
   /* ============= SLIDE 3 ============= */
   .s3-content {
-    padding: 0 80px; display: flex; flex-direction: column; gap: 8px;
+    padding: 0 clamp(24px, 5vw, 80px); display: flex; flex-direction: column; gap: clamp(4px, 0.7vh, 8px);
     min-height: 0; flex: 1;
   }
   .s3-levels {
@@ -400,8 +373,8 @@
     flex: 1; min-height: 0;
   }
   .s3-level {
-    display: flex; align-items: center; gap: 24px;
-    background: var(--dark-card); padding: 14px 28px;
+    display: flex; align-items: center; gap: clamp(12px, 1.6vw, 24px);
+    background: var(--dark-card); padding: clamp(8px, 1.2vh, 14px) clamp(14px, 2vw, 28px);
     border: 1px solid #DF0D6115; flex: 1;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -414,17 +387,17 @@
   .s3-level:hover .s3-level-bar { transform: scaleY(1.3); transition: transform 0.3s ease; }
   .s3-level-num {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 36px; font-weight: 700;
-    min-width: 50px;
+    font-size: clamp(24px, 2.5vw, 36px); font-weight: 700;
+    min-width: clamp(36px, 3.5vw, 50px);
   }
-  .s3-level-info { min-width: 200px; }
+  .s3-level-info { min-width: clamp(140px, 14vw, 200px); }
   .s3-level-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px; font-weight: 600;
+    font-size: clamp(15px, 1.4vw, 20px); font-weight: 600;
   }
-  .s3-level-sub { font-size: 14px; color: var(--gray); margin-top: 2px; }
+  .s3-level-sub { font-size: clamp(11px, 1vw, 14px); color: var(--gray); margin-top: 2px; }
   .s3-level-desc {
-    font-size: 15px; color: var(--light-gray); line-height: 1.4;
+    font-size: clamp(12px, 1vw, 15px); color: var(--light-gray); line-height: 1.4;
     flex: 1;
   }
   .s3-level-bar {
@@ -439,33 +412,36 @@
   .s3-level-5 .s3-level-title { color: white; }
   .s3-level-5 .s3-level-sub { color: #ffffff90; }
   .s3-level-5 .s3-level-desc { color: #ffffffcc; }
+  .s3-level-5:hover .s3-level-num,
+  .s3-level-5:hover .s3-level-title { color: white; }
+  .s3-level-5:hover .s3-level-bar { background: white; }
 
   /* ============= SLIDE 4 ============= */
   .s4-content {
     flex: 1; display: flex; flex-direction: column;
-    padding: 0 80px; gap: 24px; overflow: hidden;
+    padding: 0 clamp(24px, 5vw, 80px); gap: clamp(12px, 2vh, 24px); overflow: hidden;
   }
   .s4-cols {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.8vw, 40px);
     flex: 1; overflow: hidden;
   }
   .s4-col {
     display: flex; flex-direction: column; overflow: hidden;
   }
   .s4-col-header {
-    display: flex; align-items: center; gap: 12px;
-    padding: 16px 20px;
+    display: flex; align-items: center; gap: clamp(6px, 0.8vw, 12px);
+    padding: clamp(10px, 1.4vh, 16px) clamp(12px, 1.4vw, 20px);
     border-radius: 8px 8px 0 0;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 26px; font-weight: 700; color: white;
+    font-size: clamp(18px, 1.8vw, 26px); font-weight: 700; color: white;
   }
   .s4-col-body {
-    padding: 20px;
+    padding: clamp(12px, 1.4vw, 20px);
     border-radius: 0 0 8px 8px;
-    display: flex; flex-direction: column; gap: 10px;
+    display: flex; flex-direction: column; gap: clamp(6px, 0.8vh, 10px);
     flex: 1; overflow-y: auto;
     scrollbar-width: none;
-    font-size: 15px;
+    font-size: clamp(12px, 1vw, 15px);
   }
   .s4-col-body::-webkit-scrollbar { display: none; }
   .s4-col-body .desc { color: #0D0D0D99; line-height: 1.5; }
@@ -482,18 +458,18 @@
 
   /* ============= SLIDE 5 ============= */
   .s5-content {
-    padding: 0 80px; flex: 1;
-    display: flex; flex-direction: column; gap: 10px;
+    padding: 0 clamp(24px, 5vw, 80px); flex: 1;
+    display: flex; flex-direction: column; gap: clamp(6px, 0.8vh, 10px);
     min-height: 0; overflow: hidden;
   }
   .s5-cards-grid {
-    display: grid; gap: 10px;
+    display: grid; gap: clamp(6px, 0.7vw, 10px);
   }
   .s5-top-row { grid-template-columns: 1fr 1fr 1fr; }
   .s5-bottom-row { grid-template-columns: 1fr 1fr 1fr; }
   .s5-card {
-    background: var(--dark-card); padding: 16px 20px;
-    display: flex; flex-direction: column; gap: 8px;
+    background: var(--dark-card); padding: clamp(10px, 1.2vh, 16px) clamp(12px, 1.4vw, 20px);
+    display: flex; flex-direction: column; gap: clamp(4px, 0.6vh, 8px);
     border: 1px solid #ffffff10;
     transition: transform 0.3s ease, border-color 0.3s ease;
   }
@@ -506,14 +482,14 @@
   .s5-card:hover .s5-card-desc { color: var(--light-gray); transition: color 0.3s ease; }
   .s5-card-num {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 24px; font-weight: 700; color: #DF0D6150;
+    font-size: clamp(16px, 1.7vw, 24px); font-weight: 700; color: #DF0D6150;
   }
   .s5-card-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px; font-weight: 600; line-height: 1.2;
+    font-size: clamp(13px, 1.3vw, 18px); font-weight: 600; line-height: 1.2;
   }
   .s5-card-desc {
-    font-size: 14px; color: var(--gray); line-height: 1.4;
+    font-size: clamp(11px, 1vw, 14px); color: var(--gray); line-height: 1.4;
   }
   .s5-card.s5-deploy-card {
     background: var(--accent); border-color: var(--accent);
@@ -558,18 +534,18 @@
   /* ============= SLIDE 6 ============= */
   .s6-content {
     flex: 1; display: flex; flex-direction: column;
-    padding: 0 80px; gap: 8px; overflow-y: auto;
+    padding: 0 clamp(24px, 5vw, 80px); gap: clamp(4px, 0.7vh, 8px); overflow-y: auto;
     min-height: 0; scrollbar-width: none;
   }
   .s6-content::-webkit-scrollbar { display: none; }
   .s6-grid {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(10px, 1.4vw, 20px);
     flex: 1;
   }
-  .s6-col { display: flex; flex-direction: column; gap: 20px; }
+  .s6-col { display: flex; flex-direction: column; gap: clamp(10px, 1.4vw, 20px); }
   .s6-card {
     background: var(--dark-card); border-radius: 8px;
-    padding: 24px; display: flex; flex-direction: column; gap: 12px;
+    padding: clamp(14px, 1.7vw, 24px); display: flex; flex-direction: column; gap: clamp(8px, 1vh, 12px);
     flex: 1;
     transition: transform 0.3s ease;
   }
@@ -578,9 +554,9 @@
   .s6-card:hover .icon-lg { transform: scale(1.2); transition: transform 0.3s ease; }
   .s6-card-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px; font-weight: 700;
+    font-size: clamp(16px, 1.5vw, 22px); font-weight: 700;
   }
-  .s6-card-desc { font-size: 16px; color: #ffffff99; line-height: 1.5; }
+  .s6-card-desc { font-size: clamp(12px, 1.1vw, 16px); color: #ffffff99; line-height: 1.5; }
   .s6-mit-label {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 11px; font-weight: 700; color: var(--accent);
@@ -606,28 +582,28 @@
   /* ============= SLIDE 7 ============= */
   .s7-content {
     flex: 1; display: grid;
-    grid-template-columns: 1fr 1fr 1fr; gap: 32px;
-    padding: 0 80px; overflow: hidden;
+    grid-template-columns: 1fr 1fr 1fr; gap: clamp(16px, 2.2vw, 32px);
+    padding: 0 clamp(24px, 5vw, 80px); overflow: hidden;
     min-height: 0;
   }
-  .s7-col { display: flex; flex-direction: column; gap: 16px; overflow-y: auto; scrollbar-width: none; min-height: 0; }
+  .s7-col { display: flex; flex-direction: column; gap: clamp(8px, 1.2vh, 16px); overflow-y: auto; scrollbar-width: none; min-height: 0; }
   .s7-col::-webkit-scrollbar { display: none; }
   .s7-col-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 24px; font-weight: 600;
+    font-size: clamp(16px, 1.7vw, 24px); font-weight: 600;
   }
   .s7-tool {
-    background: #FAFAFA; padding: 20px;
-    display: flex; gap: 16px; border-radius: 4px;
+    background: #FAFAFA; padding: clamp(12px, 1.4vw, 20px);
+    display: flex; gap: clamp(8px, 1.1vw, 16px); border-radius: 4px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   .s7-tool:hover { transform: translateX(4px); box-shadow: -3px 0 12px #DF0D6115; }
   .s7-tool:hover .s7-tool-title { color: var(--accent); transition: color 0.3s ease; }
   .s7-tool-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px; font-weight: 600;
+    font-size: clamp(14px, 1.4vw, 20px); font-weight: 600;
   }
-  .s7-tool-desc { font-size: 16px; color: var(--gray); line-height: 1.5; }
+  .s7-tool-desc { font-size: clamp(12px, 1.1vw, 16px); color: var(--gray); line-height: 1.5; }
   .s7-prompt-card {
     padding: 20px; border: 1px solid #E8E8E8;
     display: flex; flex-direction: column; gap: 10px;
@@ -641,16 +617,16 @@
     font-size: 18px; font-weight: 700; color: var(--accent);
   }
   .s7-prompt-desc { font-size: 16px; color: var(--gray); line-height: 1.5; }
-  .s7-khryas-box {
+  .s7-bisect-box {
     background: var(--dark); border-radius: 8px;
     padding: 20px; color: white;
     display: flex; flex-direction: column; gap: 12px;
   }
-  .s7-khryas-title {
+  .s7-bisect-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 24px; font-weight: 700;
   }
-  .s7-khryas-desc { font-size: 15px; color: var(--light-gray); line-height: 1.5; }
+  .s7-bisect-desc { font-size: 15px; color: var(--light-gray); line-height: 1.5; }
   .s7-phase {
     display: flex; gap: 10px; align-items: center;
     font-size: 15px; font-weight: 500;
@@ -671,13 +647,13 @@
     display: flex; flex-direction: column; gap: 8px;
   }
   .s7-best-bar {
-    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;
-    padding: 16px 80px 0;
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: clamp(8px, 1.1vw, 16px);
+    padding: clamp(8px, 1.2vh, 16px) clamp(24px, 5vw, 80px) 0;
     flex-shrink: 0;
   }
   .s7-best-card {
-    background: #F5F5F5; border-radius: 8px; padding: 12px 16px;
-    display: flex; gap: 10px; align-items: flex-start;
+    background: #F5F5F5; border-radius: 8px; padding: clamp(8px, 1vh, 12px) clamp(10px, 1.1vw, 16px);
+    display: flex; gap: clamp(6px, 0.7vw, 10px); align-items: flex-start;
     transition: transform 0.3s ease, background 0.3s ease;
   }
   .s7-best-card:hover { transform: translateY(-2px); background: #EFEFEF; }
@@ -695,33 +671,28 @@
   }
   .s8-center {
     display: flex; flex-direction: column;
-    align-items: center; gap: 48px; z-index: 2;
+    align-items: center; gap: clamp(24px, 4vh, 48px); z-index: 2;
     text-align: center;
   }
   .s8-badge {
-    background: var(--accent-20); padding: 8px 20px;
+    background: var(--accent-20); padding: clamp(4px, 0.6vh, 8px) clamp(10px, 1.4vw, 20px);
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px; font-weight: 500;
-    color: var(--accent); letter-spacing: 3px;
+    font-size: clamp(13px, 1.3vw, 18px); font-weight: 500;
+    color: var(--accent); letter-spacing: clamp(1.5px, 0.2vw, 3px);
   }
   .s8-title {
-    font-size: clamp(60px, 8vw, 120px);
+    font-size: clamp(40px, 8vw, 120px);
     letter-spacing: -4px; line-height: 1;
   }
   .s8-divider {
     width: 160px; height: 4px; background: var(--accent);
   }
   .s8-subtitle {
-    font-size: 28px; color: var(--gray); line-height: 1.5;
+    font-size: clamp(16px, 2vw, 28px); color: var(--gray); line-height: 1.5;
     max-width: 900px;
   }
-  .s8-right-panel {
-    position: absolute; right: 0; top: 120px;
-    width: 560px; height: 840px;
-    background: #14141480;
-  }
   .s8-question-mark {
-    position: absolute; left: 220px; top: 320px;
+    position: absolute; left: 70%; top: 30%;
     width: 120px; height: 120px; border-radius: 60px;
     background: var(--accent-20); border: 2px solid var(--accent-40);
     display: flex; align-items: center; justify-content: center;
@@ -730,6 +701,7 @@
     animation: glowPulse 3s ease-in-out infinite;
     transition: left 0.15s ease-out, top 0.15s ease-out;
     pointer-events: none;
+    z-index: 1;
   }
 
   /* Utility classes for extracted inline styles */
@@ -747,26 +719,26 @@
   .bg-green { background: var(--green); }
   .bg-amber { background: #F59E0B; }
   .slide-header {
-    padding: 0 80px;
+    padding: 0 clamp(24px, 5vw, 80px);
     flex-shrink: 0;
   }
-  .slide-header-pt { padding-top: 16px; }
-  .slide-header-pb { padding-bottom: 8px; }
+  .slide-header-pt { padding-top: clamp(8px, 1.5vh, 16px); }
+  .slide-header-pb { padding-bottom: clamp(4px, 0.8vh, 8px); }
   .slide-header .slide-title {
-    margin: 8px 0;
+    margin: clamp(4px, 0.8vh, 8px) 0;
   }
   .slide-header .slide-subtitle {
     line-height: 1.5;
   }
-  .fs-48 { font-size: 48px; }
-  .fs-50 { font-size: 50px; }
-  .fs-54 { font-size: 54px; }
-  .fs-17 { font-size: 17px; }
-  .fs-18 { font-size: 18px; }
-  .fs-20 { font-size: 20px; }
-  .fs-14 { font-size: 14px; }
-  .icon-lg { font-size: 28px; }
-  .icon-xl { font-size: 32px; }
+  .fs-48 { font-size: clamp(28px, 3.3vw, 48px); }
+  .fs-50 { font-size: clamp(30px, 3.5vw, 50px); }
+  .fs-54 { font-size: clamp(32px, 3.7vw, 54px); }
+  .fs-17 { font-size: clamp(13px, 1.2vw, 17px); }
+  .fs-18 { font-size: clamp(13px, 1.3vw, 18px); }
+  .fs-20 { font-size: clamp(14px, 1.4vw, 20px); }
+  .fs-14 { font-size: clamp(11px, 1vw, 14px); }
+  .icon-lg { font-size: clamp(20px, 2vw, 28px); transition: transform 0.3s ease; }
+  .icon-xl { font-size: clamp(24px, 2.2vw, 32px); transition: transform 0.3s ease; }
   .mt-8 { margin-top: 8px; }
   .mt-4 { margin-top: 4px; }
   .mt-16 { margin-top: 16px; }
@@ -784,7 +756,7 @@
 
   /* Responsive */
   @media (max-width: 1200px) {
-    .s1-right-panel, .s8-right-panel { display: none; }
+    .s1-right-panel { display: none; }
     .s4-cols { grid-template-columns: 1fr; overflow-y: auto; }
     .s5-top-row, .s5-bottom-row, .s5-feature-row { grid-template-columns: 1fr 1fr; }
     .s6-grid, .s6-mit-row { grid-template-columns: 1fr 1fr; }
@@ -822,33 +794,33 @@
       <p class="s1-subtitle anim anim-fade-up d4">From basic prompting to production-grade AI systems.<br>Skills, context, code review, and automation that redefine engineering.</p>
       <div class="divider anim anim-fade-up d5"></div>
       <div class="s1-pillars">
-        <div class="s1-pillar anim anim-fade-left d5">
-          <span class="s1-pillar-num">01</span>
-          <div><div class="s1-pillar-title">Skills Architecture</div><div class="s1-pillar-desc">SKILL.md structure, file roles &amp; MCP integration</div></div>
+        <div class="s1-pillar anim anim-fade-up d5">
+          <span class="s1-pillar-num anim anim-fade-up d5">01</span>
+          <div><div class="s1-pillar-title anim anim-fade-up d5">Skills Architecture</div><div class="s1-pillar-desc anim anim-fade-up d6">SKILL.md structure, file roles &amp; MCP integration</div></div>
         </div>
-        <div class="s1-pillar anim anim-fade-left d6">
-          <span class="s1-pillar-num">02</span>
-          <div><div class="s1-pillar-title">Five Levels of Automation</div><div class="s1-pillar-desc">From autocomplete to dark software factory</div></div>
+        <div class="s1-pillar anim anim-fade-up d6">
+          <span class="s1-pillar-num anim anim-fade-up d6">02</span>
+          <div><div class="s1-pillar-title anim anim-fade-up d6">Five Levels of Automation</div><div class="s1-pillar-desc anim anim-fade-up d7">From autocomplete to dark software factory</div></div>
         </div>
-        <div class="s1-pillar anim anim-fade-left d7">
-          <span class="s1-pillar-num">03</span>
-          <div><div class="s1-pillar-title">Brownfield vs Greenfield</div><div class="s1-pillar-desc">Pros, cons &amp; actionable tips for each path</div></div>
+        <div class="s1-pillar anim anim-fade-up d7">
+          <span class="s1-pillar-num anim anim-fade-up d7">03</span>
+          <div><div class="s1-pillar-title anim anim-fade-up d7">Brownfield vs Greenfield</div><div class="s1-pillar-desc anim anim-fade-up d8">Pros, cons &amp; actionable tips for each path</div></div>
         </div>
-        <div class="s1-pillar anim anim-fade-left d8">
-          <span class="s1-pillar-num">04</span>
-          <div><div class="s1-pillar-title">Skill Design Patterns</div><div class="s1-pillar-desc">Repeatable patterns for production-grade skills</div></div>
+        <div class="s1-pillar anim anim-fade-up d8">
+          <span class="s1-pillar-num anim anim-fade-up d8">04</span>
+          <div><div class="s1-pillar-title anim anim-fade-up d8">Skill Design Patterns</div><div class="s1-pillar-desc anim anim-fade-up d9">Repeatable patterns for production-grade skills</div></div>
         </div>
-        <div class="s1-pillar anim anim-fade-right d5">
-          <span class="s1-pillar-num">05</span>
-          <div><div class="s1-pillar-title">Risks &amp; Problems</div><div class="s1-pillar-desc">What can go wrong with AI automation at scale</div></div>
+        <div class="s1-pillar anim anim-fade-up d5">
+          <span class="s1-pillar-num anim anim-fade-up d5">05</span>
+          <div><div class="s1-pillar-title anim anim-fade-up d5">Risks &amp; Problems</div><div class="s1-pillar-desc anim anim-fade-up d6">What can go wrong with AI automation at scale</div></div>
         </div>
-        <div class="s1-pillar anim anim-fade-right d6">
-          <span class="s1-pillar-num">06</span>
-          <div><div class="s1-pillar-title">Context Battle &amp; Mitigation</div><div class="s1-pillar-desc">Risks, context overflow &amp; mitigation strategies</div></div>
+        <div class="s1-pillar anim anim-fade-up d6">
+          <span class="s1-pillar-num anim anim-fade-up d6">06</span>
+          <div><div class="s1-pillar-title anim anim-fade-up d6">Context Battle &amp; Mitigation</div><div class="s1-pillar-desc anim anim-fade-up d7">Risks, context overflow &amp; mitigation strategies</div></div>
         </div>
-        <div class="s1-pillar anim anim-fade-right d7">
-          <span class="s1-pillar-num">07</span>
-          <div><div class="s1-pillar-title">Tooling, Khryas &amp; Best Practices</div><div class="s1-pillar-desc">Khryas technique, prompting &amp; self-evolving agents</div></div>
+        <div class="s1-pillar anim anim-fade-up d7">
+          <span class="s1-pillar-num anim anim-fade-up d7">07</span>
+          <div><div class="s1-pillar-title anim anim-fade-up d7">Tooling, Bisect &amp; Best Practices</div><div class="s1-pillar-desc anim anim-fade-up d8">Bisect technique, prompting &amp; self-evolving agents</div></div>
         </div>
       </div>
     </div>
@@ -870,7 +842,7 @@
 
 <!-- ========== SLIDE 2 — Skills Architecture ========== -->
 <section class="slide slide-light" id="slide-2">
-  <div class="accent-bar anim d1"></div>
+  <div class="accent-bar"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">02 / 08</div>
@@ -881,21 +853,21 @@
     <p class="slide-subtitle anim anim-fade-up d4 text-muted fs-17" style="max-width:1200px">Packaged instructions that teach Claude repeatable recipes — combining built-in capabilities with external tools.</p>
   </div>
   <div class="s2-content mt-16">
-    <div class="s2-col anim anim-fade-left d5">
-      <div class="s2-col-title">Core File Structure</div>
-      <div class="s2-table">
+    <div class="s2-col anim anim-fade-up d5">
+      <div class="s2-col-title anim anim-fade-up d5">Core File Structure</div>
+      <div class="s2-table anim anim-fade-up d6">
         <div class="s2-table-header"><span>Component</span><span>Scope</span><span>Description</span></div>
         <div class="s2-table-row"><span class="comp">SKILL.md</span><span class="scope">required</span><span>Main skill definition with YAML frontmatter</span></div>
         <div class="s2-table-row"><span class="comp text-dark">scripts/</span><span class="scope">optional</span><span>Executable code (Python, Bash) for deterministic tasks</span></div>
         <div class="s2-table-row"><span class="comp text-dark">references/</span><span class="scope">optional</span><span>Docs, API specs, inspection examples</span></div>
         <div class="s2-table-row"><span class="comp text-dark">assets/</span><span class="scope">optional</span><span>Templates, icons, or static files used in output</span></div>
       </div>
-      <div class="s2-col-title mt-8">Skill Creation Recommendations</div>
-      <div class="s2-rec"><div class="s2-rec-num bg-accent">1</div><div><div class="s2-rec-title">One Skill Per Domain</div><div class="s2-rec-desc">Isolate each skill to a single responsibility — deploy, test, refactor, review.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num bg-accent">2</div><div><div class="s2-rec-title">Include Real Examples</div><div class="s2-rec-desc">Add working code snippets, CLI commands, and expected outputs.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num bg-accent">3</div><div><div class="s2-rec-title">Pin Project Conventions</div><div class="s2-rec-desc">Encode naming, folder structure, testing patterns, and commit style.</div></div></div>
-      <div class="s2-col-title mt-8">Agile Skill Lifecycle</div>
-      <div class="s2-agile-box">
+      <div class="s2-col-title mt-8 anim anim-fade-up d7">Skill Creation Recommendations</div>
+      <div class="s2-rec anim anim-fade-up d7"><div class="s2-rec-num bg-accent">1</div><div><div class="s2-rec-title">One Skill Per Domain</div><div class="s2-rec-desc">Isolate each skill to a single responsibility — deploy, test, refactor, review.</div></div></div>
+      <div class="s2-rec anim anim-fade-up d8"><div class="s2-rec-num bg-accent">2</div><div><div class="s2-rec-title">Include Real Examples</div><div class="s2-rec-desc">Add working code snippets, CLI commands, and expected outputs.</div></div></div>
+      <div class="s2-rec anim anim-fade-up d9"><div class="s2-rec-num bg-accent">3</div><div><div class="s2-rec-title">Pin Project Conventions</div><div class="s2-rec-desc">Encode naming, folder structure, testing patterns, and commit style.</div></div></div>
+      <div class="s2-col-title mt-8 anim anim-fade-up d9">Agile Skill Lifecycle</div>
+      <div class="s2-agile-box anim anim-fade-up d10">
         <div class="s2-cycle">
           <span class="s2-cycle-step bg-accent">Draft</span>
           <span class="text-muted">→</span>
@@ -909,24 +881,24 @@
         </div>
         <p class="text-muted mt-8" style="font-size:15px;line-height:1.4">Treat skills like sprints. Ship small, measure results, improve weekly.</p>
       </div>
-      <div class="s2-auto-box mt-4">
+      <div class="s2-auto-box mt-4 anim anim-fade-up d11">
         <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px"><span class="text-blue">🔄</span><span class="s2-auto-title">Auto-Update Strategy</span></div>
         <div class="s2-auto-item"><span class="text-blue">✓</span> CI hooks detect skill drift — auto-flag when APIs change</div>
         <div class="s2-auto-item mt-4"><span class="text-blue">✓</span> Agent logs feed back — failures auto-generate skill improvement PRs</div>
         <div class="s2-auto-item mt-4"><span class="text-blue">✓</span> Scheduled re-validation — weekly test runs catch silent regressions</div>
       </div>
     </div>
-    <div class="s2-col anim anim-fade-right d6">
-      <div class="s2-col-title">Three Levels of Progressive Disclosure</div>
-      <div class="s2-level"><span class="s2-level-num">L1</span><div><div class="s2-level-title">YAML Frontmatter</div><div class="s2-level-desc">Always loaded. Short description tells Claude when to trigger the skill.</div></div></div>
-      <div class="s2-level"><span class="s2-level-num">L2</span><div><div class="s2-level-title">SKILL.md Body</div><div class="s2-level-desc">Loaded only when Claude identifies the skill as relevant to the user's request.</div></div></div>
-      <div class="s2-level"><span class="s2-level-num">L3</span><div><div class="s2-level-title">Linked Files</div><div class="s2-level-desc">On-the-fly: Claude pulls in any extra task-specific details.</div></div></div>
-      <div class="s2-mcp-box"><span>🔌</span><span>Synergy with MCP — APIs, file systems, DBs, other services. Together they build fully integrated workflows.</span></div>
-      <div class="s2-col-title mt-8">Best Practices</div>
-      <div class="s2-rec"><div class="s2-rec-num bg-blue">4</div><div><div class="s2-rec-title">Version &amp; Test Skills</div><div class="s2-rec-desc">Treat skills like code — git versioning, peer review, and automated validation.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num bg-blue">5</div><div><div class="s2-rec-title">Use Progressive Disclosure</div><div class="s2-rec-desc">Keep YAML frontmatter minimal. Load heavy context only when triggered.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num bg-blue">6</div><div><div class="s2-rec-title">Bind to Project Stack</div><div class="s2-rec-desc">Reference your actual frameworks, ORMs, CI tools. A Django skill for a Django project beats a generic Python skill.</div></div></div>
-      <div class="s2-mcp-box mt-4"><span>💡</span><span>Start with 3 skills: deploy, test, and review. Expand only after these are proven and adopted by the team.</span></div>
+    <div class="s2-col anim anim-fade-up d6">
+      <div class="s2-col-title anim anim-fade-up d5">Three Levels of Progressive Disclosure</div>
+      <div class="s2-level anim anim-fade-up d6"><span class="s2-level-num">L1</span><div><div class="s2-level-title">YAML Frontmatter</div><div class="s2-level-desc">Always loaded. Short description tells Claude when to trigger the skill.</div></div></div>
+      <div class="s2-level anim anim-fade-up d7"><span class="s2-level-num">L2</span><div><div class="s2-level-title">SKILL.md Body</div><div class="s2-level-desc">Loaded only when Claude identifies the skill as relevant to the user's request.</div></div></div>
+      <div class="s2-level anim anim-fade-up d8"><span class="s2-level-num">L3</span><div><div class="s2-level-title">Linked Files</div><div class="s2-level-desc">On-the-fly: Claude pulls in any extra task-specific details.</div></div></div>
+      <div class="s2-mcp-box anim anim-fade-up d9"><span>🔌</span><span>Synergy with MCP — APIs, file systems, DBs, other services. Together they build fully integrated workflows.</span></div>
+      <div class="s2-col-title mt-8 anim anim-fade-up d9">Best Practices</div>
+      <div class="s2-rec anim anim-fade-up d10"><div class="s2-rec-num bg-blue">4</div><div><div class="s2-rec-title">Version &amp; Test Skills</div><div class="s2-rec-desc">Treat skills like code — git versioning, peer review, and automated validation.</div></div></div>
+      <div class="s2-rec anim anim-fade-up d11"><div class="s2-rec-num bg-blue">5</div><div><div class="s2-rec-title">Use Progressive Disclosure</div><div class="s2-rec-desc">Keep YAML frontmatter minimal. Load heavy context only when triggered.</div></div></div>
+      <div class="s2-rec anim anim-fade-up d12"><div class="s2-rec-num bg-blue">6</div><div><div class="s2-rec-title">Bind to Project Stack</div><div class="s2-rec-desc">Reference your actual frameworks, ORMs, CI tools. A Django skill for a Django project beats a generic Python skill.</div></div></div>
+      <div class="s2-mcp-box mt-4 anim anim-fade-up d12"><span>💡</span><span>Start with 3 skills: deploy, test, and review. Expand only after these are proven and adopted by the team.</span></div>
     </div>
   </div>
   <div class="bottom-bar" style="color:#B0B0B0">
@@ -937,7 +909,7 @@
 
 <!-- ========== SLIDE 3 — Five Levels ========== -->
 <section class="slide slide-dark" id="slide-3">
-  <div class="accent-bar anim d1"></div>
+  <div class="accent-bar"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">03 / 08</div>
@@ -989,7 +961,7 @@
 
 <!-- ========== SLIDE 4 — Brownfield vs Greenfield ========== -->
 <section class="slide slide-light" id="slide-4">
-  <div class="accent-bar anim d1"></div>
+  <div class="accent-bar"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">04 / 08</div>
@@ -1057,7 +1029,7 @@
 
 <!-- ========== SLIDE 5 — Skill Design Patterns ========== -->
 <section class="slide slide-dark" id="slide-5">
-  <div class="accent-bar anim d1"></div>
+  <div class="accent-bar"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">05 / 08</div>
@@ -1113,7 +1085,7 @@
 
 <!-- ========== SLIDE 6 — Risks & Problems ========== -->
 <section class="slide slide-dark" id="slide-6">
-  <div class="accent-bar anim d1"></div>
+  <div class="accent-bar"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">06 / 08</div>
@@ -1153,13 +1125,13 @@
 
 <!-- ========== SLIDE 7 — Tooling & Self-Evolving Agents ========== -->
 <section class="slide slide-light" id="slide-7">
-  <div class="accent-bar anim d1"></div>
+  <div class="accent-bar"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">07 / 08</div>
   </div>
   <div class="slide-header">
-    <div class="section-label anim anim-fade-up d2 fs-14">TOOLING, KHRYAS TECHNIQUE &amp; SELF-EVOLVING AGENTS</div>
+    <div class="section-label anim anim-fade-up d2 fs-14">TOOLING, BISECT TECHNIQUE &amp; SELF-EVOLVING AGENTS</div>
     <h2 class="slide-title anim anim-fade-up d3 fs-50 text-dark">Best Practices for<br>Production Efficiency</h2>
   </div>
   <div class="s7-content mt-8">
@@ -1176,18 +1148,18 @@
       <div class="s7-prompt-card"><div class="s7-prompt-title">Negative Constraints</div><div class="s7-prompt-desc">Say "don't do X because Y" based on past errors.</div></div>
     </div>
     <div class="s7-col anim anim-fade-right d6">
-      <div class="s7-col-title">The Khryas Technique</div>
-      <div class="s7-khryas-box">
+      <div class="s7-col-title">The Bisect Technique</div>
+      <div class="s7-bisect-box">
         <div class="text-accent icon-xl">✂️</div>
-        <div class="s7-khryas-title">Split → Isolate → Reset</div>
-        <div class="s7-khryas-desc">Break failing tasks in half. Generate minimal failing test. Clear context. Restart with only the test as anchor.</div>
+        <div class="s7-bisect-title">Split → Isolate → Reset</div>
+        <div class="s7-bisect-desc">Break failing tasks in half. Generate minimal failing test. Clear context. Restart with only the test as anchor.</div>
         <div class="s7-phase"><span class="text-accent">🔍</span> Phase 1: Isolate — strip deps, minimal failing test</div>
         <div class="s7-phase"><span class="text-accent">🗑</span> Phase 2: Reset — clear context, provide only the test</div>
         <div class="s7-phase"><span class="text-green">✓</span> Phase 3: Fix passes → verified, no hallucination</div>
       </div>
       <div class="s7-conclusion">
         <div class="s7-conclusion-title">🎯 Conclusion</div>
-        <div class="s7-conclusion-desc">Stop writing code. Start defining boundaries. The Khryas split — test first, context second — is the #1 skill for AI development.</div>
+        <div class="s7-conclusion-desc">Stop writing code. Start defining boundaries. The Bisect split — test first, context second — is the #1 skill for AI development.</div>
       </div>
       <div class="s7-self-evolve">
         <div class="text-muted-light fs-14">After each win, update AGENTS.md. Lessons captured automatically for future sessions. The agent teaches itself.</div>
@@ -1218,11 +1190,9 @@
       <div class="s8-badge anim anim-scale d2">THANK YOU</div>
       <h1 class="slide-title s8-title anim anim-fade-up d3">Questions &amp;<br>Answers</h1>
       <div class="s8-divider anim anim-fade d5"></div>
-      <p class="s8-subtitle anim anim-fade-up d6">Let's discuss AI skills, agentic workflows,<br>context management, and the Khryas technique.</p>
+      <p class="s8-subtitle anim anim-fade-up d6">Let's discuss AI skills, agentic workflows,<br>context management, and the Bisect technique.</p>
     </div>
-    <div class="s8-right-panel anim anim-fade d7">
-      <div class="s8-question-mark anim anim-scale d8">?</div>
-    </div>
+    <div class="s8-question-mark anim anim-scale d7">?</div>
   </div>
   <div class="bottom-bar">
     <span class="copy">code.store</span>
@@ -1311,6 +1281,14 @@
     progressBar.style.width = ((currentSlide / totalSlides) * 100) + '%';
     progressBar.setAttribute('aria-valuenow', currentSlide);
 
+    // Update accent bars — width proportional to slide position
+    document.querySelectorAll('.slide .accent-bar').forEach(bar => {
+      const slide = bar.closest('.slide');
+      if (slide && slide.classList.contains('active')) {
+        bar.style.width = ((currentSlide / totalSlides) * 100) + '%';
+      }
+    });
+
     // Announce slide change for screen readers
     document.getElementById('slideAnnouncer').textContent =
       'Slide ' + currentSlide + ' of ' + totalSlides + ': ' + slideNames[currentSlide - 1];
@@ -1374,24 +1352,28 @@
     }
   }, { passive: true });
 
-  // Init progress bar and animate first slide (reuse animateSlide)
+  // Init progress bar and accent bars, animate first slide
   document.getElementById('progressBar').style.width = (100 / totalSlides) + '%';
+  // Set all accent bars to proportional width based on their slide
+  document.querySelectorAll('.slide .accent-bar').forEach(bar => {
+    bar.style.width = '0%';
+  });
   animateSlide(document.getElementById('slide-1'));
+  // Set accent bar for slide 1 (if it has one)
+  const s1bar = document.querySelector('#slide-1 .accent-bar');
+  if (s1bar) s1bar.style.width = (100 / totalSlides) + '%';
 
-  // Slide 8: Question mark follows mouse
+  // Slide 8: Question mark follows mouse across full screen
   const slide8 = document.getElementById('slide-8');
   const qMark = slide8.querySelector('.s8-question-mark');
-  const rightPanel = slide8.querySelector('.s8-right-panel');
 
   slide8.addEventListener('mousemove', (e) => {
     if (currentSlide !== 8) return;
-    const rect = rightPanel.getBoundingClientRect();
-    // Map mouse position relative to right panel, with offset so ? stays centered
+    const rect = slide8.getBoundingClientRect();
     const targetX = e.clientX - rect.left - 60;
     const targetY = e.clientY - rect.top - 60;
-    // Clamp within panel bounds
-    const clampedX = Math.max(-20, Math.min(targetX, rect.width - 100));
-    const clampedY = Math.max(-20, Math.min(targetY, rect.height - 100));
+    const clampedX = Math.max(0, Math.min(targetX, rect.width - 120));
+    const clampedY = Math.max(0, Math.min(targetY, rect.height - 120));
     qMark.style.left = clampedX + 'px';
     qMark.style.top = clampedY + 'px';
   }, { passive: true });
