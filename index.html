@@ -89,15 +89,16 @@
   .slide .anim {
     opacity: 0;
   }
-  .slide.active .anim {
-    animation-fill-mode: forwards;
+  .slide .anim.animated {
+    opacity: 1;
   }
-  .slide.active .anim-fade-up { animation: fadeInUp 0.7s ease forwards; }
-  .slide.active .anim-fade-left { animation: fadeInLeft 0.7s ease forwards; }
-  .slide.active .anim-fade-right { animation: fadeInRight 0.7s ease forwards; }
-  .slide.active .anim-scale { animation: scaleIn 0.6s ease forwards; }
-  .slide.active .anim-fade { animation: fadeIn 0.5s ease forwards; }
-  .slide.active .anim-slide-down { animation: slideDown 0.6s ease forwards; }
+  .slide.active .anim.animating { animation-fill-mode: forwards; }
+  .slide.active .anim-fade-up.animating { animation: fadeInUp 0.7s ease forwards; }
+  .slide.active .anim-fade-left.animating { animation: fadeInLeft 0.7s ease forwards; }
+  .slide.active .anim-fade-right.animating { animation: fadeInRight 0.7s ease forwards; }
+  .slide.active .anim-scale.animating { animation: scaleIn 0.6s ease forwards; }
+  .slide.active .anim-fade.animating { animation: fadeIn 0.5s ease forwards; }
+  .slide.active .anim-slide-down.animating { animation: slideDown 0.6s ease forwards; }
 
   .d1 { animation-delay: 0.1s !important; }
   .d2 { animation-delay: 0.2s !important; }
@@ -187,8 +188,16 @@
   /* Progress Bar */
   .progress-bar {
     position: fixed; top: 0; left: 0;
-    height: 3px; background: var(--accent);
-    z-index: 100; transition: width 0.4s ease;
+    height: 3px; background: linear-gradient(90deg, var(--accent), #FF4D8D, var(--accent));
+    background-size: 200% 100%;
+    z-index: 100;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px var(--accent-40), 0 0 20px var(--accent-20);
+    animation: progressGlow 2s ease-in-out infinite;
+  }
+  @keyframes progressGlow {
+    0%, 100% { background-position: 0% 50%; box-shadow: 0 0 8px var(--accent-40); }
+    50% { background-position: 100% 50%; box-shadow: 0 0 16px var(--accent), 0 0 30px var(--accent-30); }
   }
 
   /* Keyboard hint */
@@ -1146,22 +1155,40 @@
     dotsContainer.appendChild(dot);
   }
 
+  // Track which slides have been animated
+  const animatedSlides = new Set([1]);
+
+  function animateSlide(slide) {
+    const slideId = parseInt(slide.id.split('-')[1]);
+    if (animatedSlides.has(slideId)) return;
+    animatedSlides.add(slideId);
+
+    const anims = slide.querySelectorAll('.anim');
+    anims.forEach(el => {
+      el.classList.add('animating');
+      // After animation ends, lock the visible state and remove animating
+      el.addEventListener('animationend', () => {
+        el.classList.remove('animating');
+        el.classList.add('animated');
+      }, { once: true });
+    });
+  }
+
   function goToSlide(n) {
     if (n < 1 || n > totalSlides || n === currentSlide) return;
 
     // Deactivate current
     const curr = document.getElementById('slide-' + currentSlide);
     curr.classList.remove('active');
-    // Reset animations
-    curr.querySelectorAll('.anim').forEach(el => {
-      el.style.opacity = '0';
-    });
 
     currentSlide = n;
 
     // Activate new
     const next = document.getElementById('slide-' + currentSlide);
     next.classList.add('active');
+
+    // Animate elements (only first time)
+    animateSlide(next);
 
     // Update dots
     document.querySelectorAll('.nav-dot').forEach((dot, idx) => {
@@ -1225,6 +1252,16 @@
 
   // Init progress bar
   document.getElementById('progressBar').style.width = (100 / totalSlides) + '%';
+
+  // Animate first slide on load
+  const firstSlide = document.getElementById('slide-1');
+  firstSlide.querySelectorAll('.anim').forEach(el => {
+    el.classList.add('animating');
+    el.addEventListener('animationend', () => {
+      el.classList.remove('animating');
+      el.classList.add('animated');
+    }, { once: true });
+  });
 </script>
 </body>
 </html>
