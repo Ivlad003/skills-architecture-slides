@@ -48,6 +48,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    min-height: 0;
   }
 
   .slide.active {
@@ -119,6 +120,7 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: 24px 60px 0;
     position: relative; z-index: 2;
+    flex-shrink: 0;
   }
   .top-bar .logo {
     font-family: 'Space Grotesk', sans-serif;
@@ -129,6 +131,7 @@
   }
   .accent-bar {
     height: 6px; width: 100%; background: var(--accent);
+    flex-shrink: 0;
   }
   .accent-bar-left {
     position: absolute; left: 0; top: 0;
@@ -139,6 +142,8 @@
     padding: 0 60px 24px;
     font-size: 14px; color: var(--gray);
     margin-top: auto;
+    flex-shrink: 0;
+    min-height: 54px;
   }
   .bottom-bar .copy {
     font-family: 'Space Grotesk', sans-serif; font-weight: 500;
@@ -264,6 +269,7 @@
   .s2-content {
     flex: 1; display: flex; gap: 32px;
     padding: 0 80px; overflow: hidden;
+    min-height: 0;
   }
   .s2-col {
     flex: 1; display: flex; flex-direction: column;
@@ -355,10 +361,11 @@
   /* ============= SLIDE 3 ============= */
   .s3-content {
     padding: 0 80px; display: flex; flex-direction: column; gap: 16px;
+    min-height: 0;
   }
   .s3-levels {
     display: flex; flex-direction: column; gap: 12px;
-    flex: 1;
+    flex: 1; min-height: 0;
   }
   .s3-level {
     display: flex; align-items: center; gap: 32px;
@@ -442,7 +449,10 @@
   .s5-content {
     padding: 0 80px; flex: 1;
     display: flex; flex-direction: column; gap: 16px;
+    min-height: 0; overflow-y: auto;
+    scrollbar-width: none;
   }
+  .s5-content::-webkit-scrollbar { display: none; }
   .s5-cards-grid {
     display: grid; gap: 16px;
   }
@@ -509,8 +519,10 @@
   /* ============= SLIDE 6 ============= */
   .s6-content {
     flex: 1; display: flex; flex-direction: column;
-    padding: 0 80px; gap: 8px; overflow: hidden;
+    padding: 0 80px; gap: 8px; overflow-y: auto;
+    min-height: 0; scrollbar-width: none;
   }
+  .s6-content::-webkit-scrollbar { display: none; }
   .s6-grid {
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
     flex: 1;
@@ -552,8 +564,9 @@
     flex: 1; display: grid;
     grid-template-columns: 1fr 1fr 1fr; gap: 32px;
     padding: 0 80px; overflow: hidden;
+    min-height: 0;
   }
-  .s7-col { display: flex; flex-direction: column; gap: 16px; overflow-y: auto; scrollbar-width: none; }
+  .s7-col { display: flex; flex-direction: column; gap: 16px; overflow-y: auto; scrollbar-width: none; min-height: 0; }
   .s7-col::-webkit-scrollbar { display: none; }
   .s7-col-title {
     font-family: 'Space Grotesk', sans-serif;
@@ -610,6 +623,7 @@
   .s7-best-bar {
     display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;
     padding: 16px 80px 0;
+    flex-shrink: 0;
   }
   .s7-best-card {
     background: #F5F5F5; border-radius: 8px; padding: 12px 16px;
@@ -755,7 +769,7 @@
     <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
     <div class="slide-num anim anim-fade d1">02 / 08</div>
   </div>
-  <div style="padding:0 80px">
+  <div style="padding:0 80px;flex-shrink:0">
     <div class="section-label anim anim-fade-up d2">THE ARCHITECTURE OF CLAUDE SKILLS</div>
     <h2 class="slide-title anim anim-fade-up d3" style="font-size:48px;color:var(--dark);margin:8px 0">Skills as a Knowledge Layer</h2>
     <p class="anim anim-fade-up d4" style="color:#0D0D0D99;font-size:17px;line-height:1.5;max-width:1200px">Packaged instructions that teach Claude repeatable recipes — combining built-in capabilities with external tools.</p>
@@ -822,7 +836,7 @@
     <div class="logo anim anim-fade d1" style="color:white">code.store</div>
     <div class="slide-num anim anim-fade d1">03 / 08</div>
   </div>
-  <div style="padding:16px 80px 0">
+  <div style="padding:16px 80px 0;flex-shrink:0">
     <div class="section-label anim anim-fade-up d2">THE FIVE LEVELS OF AI AUTOMATION</div>
     <h2 class="slide-title anim anim-fade-up d3" style="font-size:54px;margin:8px 0">From Autocomplete to<br>Dark Software Factory</h2>
     <p class="slide-subtitle anim anim-fade-up d4" style="color:var(--gray);font-size:20px">The industry is moving from Level 1 toward Levels 4–5. Higher levels bring new cognitive and architectural challenges.</p>
@@ -874,7 +888,7 @@
     <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
     <div class="slide-num anim anim-fade d1">04 / 08</div>
   </div>
-  <div style="padding:0 80px">
+  <div style="padding:0 80px;flex-shrink:0">
     <div class="section-label anim anim-fade-up d2">BROWNFIELD VS GREENFIELD</div>
     <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;color:var(--dark);margin:8px 0">Two Paths to AI Implementation</h2>
     <p class="anim anim-fade-up d4" style="color:#0D0D0D99;font-size:18px;line-height:1.5">Retrofit AI into legacy systems or build AI-native from scratch. Each path has trade-offs.</p>
@@ -942,7 +956,7 @@
     <div class="logo anim anim-fade d1" style="color:white">code.store</div>
     <div class="slide-num anim anim-fade d1">05 / 08</div>
   </div>
-  <div style="padding:0 80px 8px">
+  <div style="padding:0 80px 8px;flex-shrink:0">
     <div class="section-label anim anim-fade-up d2">PATTERNS FOR SUCCESSFUL SKILL DESIGN</div>
     <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;margin:8px 0">Repeatable Patterns for<br>Production-Grade Skills</h2>
   </div>
@@ -998,7 +1012,7 @@
     <div class="logo anim anim-fade d1" style="color:white">code.store</div>
     <div class="slide-num anim anim-fade d1">06 / 08</div>
   </div>
-  <div style="padding:0 80px">
+  <div style="padding:0 80px;flex-shrink:0">
     <div class="section-label anim anim-fade-up d2">RISKS, CHALLENGES &amp; FAILURE MODES</div>
     <h2 class="slide-title anim anim-fade-up d3" style="font-size:48px;margin:8px 0">What Can Go Wrong<br>With AI Automation</h2>
     <p class="anim anim-fade-up d4" style="color:#ffffff99;font-size:18px">Real risks teams face when adopting AI skills and agentic workflows at scale.</p>
@@ -1038,7 +1052,7 @@
     <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
     <div class="slide-num anim anim-fade d1">07 / 08</div>
   </div>
-  <div style="padding:0 80px">
+  <div style="padding:0 80px;flex-shrink:0">
     <div class="section-label anim anim-fade-up d2" style="font-size:14px">TOOLING, KHRYAS TECHNIQUE &amp; SELF-EVOLVING AGENTS</div>
     <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;color:var(--dark);margin:8px 0">Best Practices for<br>Production Efficiency</h2>
   </div>
