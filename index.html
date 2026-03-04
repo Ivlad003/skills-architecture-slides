@@ -145,9 +145,17 @@
   .top-bar .slide-num {
     font-size: 16px; color: var(--gray);
   }
+  @keyframes sweepRight {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
   .accent-bar {
     height: 6px; width: 100%; background: var(--accent);
-    flex-shrink: 0;
+    flex-shrink: 0; transform-origin: left center;
+  }
+  /* Override anim-fade for accent-bar — use sweep instead */
+  .slide.active .accent-bar.anim.animating {
+    animation: sweepRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   .accent-bar-left {
     position: absolute; left: 0; top: 0;
@@ -217,7 +225,7 @@
 
   /* Keyboard hint */
   .key-hint {
-    position: fixed; bottom: 30px; right: 30px;
+    position: fixed; bottom: 60px; right: 30px;
     font-size: 12px; color: #ffffff40;
     z-index: 100;
     font-family: 'Inter', sans-serif;
@@ -384,16 +392,16 @@
 
   /* ============= SLIDE 3 ============= */
   .s3-content {
-    padding: 0 80px; display: flex; flex-direction: column; gap: 16px;
-    min-height: 0;
+    padding: 0 80px; display: flex; flex-direction: column; gap: 8px;
+    min-height: 0; flex: 1;
   }
   .s3-levels {
-    display: flex; flex-direction: column; gap: 12px;
+    display: flex; flex-direction: column; gap: 8px;
     flex: 1; min-height: 0;
   }
   .s3-level {
-    display: flex; align-items: center; gap: 32px;
-    background: var(--dark-card); padding: 20px 32px;
+    display: flex; align-items: center; gap: 24px;
+    background: var(--dark-card); padding: 14px 28px;
     border: 1px solid #DF0D6115; flex: 1;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -401,23 +409,26 @@
     transform: translateX(8px);
     box-shadow: -4px 0 20px #DF0D6120;
   }
+  .s3-level:hover .s3-level-num { color: var(--accent); transition: color 0.3s ease; }
+  .s3-level:hover .s3-level-title { color: var(--accent); transition: color 0.3s ease; }
+  .s3-level:hover .s3-level-bar { transform: scaleY(1.3); transition: transform 0.3s ease; }
   .s3-level-num {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 44px; font-weight: 700;
-    min-width: 60px;
+    font-size: 36px; font-weight: 700;
+    min-width: 50px;
   }
-  .s3-level-info { min-width: 240px; }
+  .s3-level-info { min-width: 200px; }
   .s3-level-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 23px; font-weight: 600;
+    font-size: 20px; font-weight: 600;
   }
-  .s3-level-sub { font-size: 16px; color: var(--gray); margin-top: 4px; }
+  .s3-level-sub { font-size: 14px; color: var(--gray); margin-top: 2px; }
   .s3-level-desc {
-    font-size: 18px; color: var(--light-gray); line-height: 1.5;
+    font-size: 15px; color: var(--light-gray); line-height: 1.4;
     flex: 1;
   }
   .s3-level-bar {
-    width: 4px; height: 50px; min-width: 4px;
+    width: 4px; height: 40px; min-width: 4px;
   }
   .s3-level.s3-level-5 {
     background: var(--accent);
@@ -472,19 +483,17 @@
   /* ============= SLIDE 5 ============= */
   .s5-content {
     padding: 0 80px; flex: 1;
-    display: flex; flex-direction: column; gap: 16px;
-    min-height: 0; overflow-y: auto;
-    scrollbar-width: none;
+    display: flex; flex-direction: column; gap: 10px;
+    min-height: 0; overflow: hidden;
   }
-  .s5-content::-webkit-scrollbar { display: none; }
   .s5-cards-grid {
-    display: grid; gap: 16px;
+    display: grid; gap: 10px;
   }
   .s5-top-row { grid-template-columns: 1fr 1fr 1fr; }
   .s5-bottom-row { grid-template-columns: 1fr 1fr 1fr; }
   .s5-card {
-    background: var(--dark-card); padding: 24px;
-    display: flex; flex-direction: column; gap: 12px;
+    background: var(--dark-card); padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 8px;
     border: 1px solid #ffffff10;
     transition: transform 0.3s ease, border-color 0.3s ease;
   }
@@ -492,16 +501,19 @@
     transform: translateY(-4px);
     border-color: var(--accent-40);
   }
+  .s5-card:hover .s5-card-num { color: var(--accent); transition: color 0.3s ease; }
+  .s5-card:hover .s5-card-title { color: var(--accent); transition: color 0.3s ease; }
+  .s5-card:hover .s5-card-desc { color: var(--light-gray); transition: color 0.3s ease; }
   .s5-card-num {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 32px; font-weight: 700; color: #DF0D6150;
+    font-size: 24px; font-weight: 700; color: #DF0D6150;
   }
   .s5-card-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px; font-weight: 600; line-height: 1.3;
+    font-size: 18px; font-weight: 600; line-height: 1.2;
   }
   .s5-card-desc {
-    font-size: 16px; color: var(--gray); line-height: 1.5;
+    font-size: 14px; color: var(--gray); line-height: 1.4;
   }
   .s5-card.s5-deploy-card {
     background: var(--accent); border-color: var(--accent);
@@ -509,19 +521,22 @@
   }
   .s5-deploy-card .s5-card-desc { color: #ffffffcc; }
   .s5-feature-row {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
   }
   .s5-feature-card {
-    border-radius: 12px; padding: 20px;
-    display: flex; flex-direction: column; gap: 12px;
+    border-radius: 12px; padding: 14px;
+    display: flex; flex-direction: column; gap: 8px;
   }
   .s5-feature-card.red { background: var(--accent); color: white; }
   .s5-feature-card.dark { background: var(--dark-card); color: white; }
+  .s5-feature-card { transition: transform 0.3s ease; }
+  .s5-feature-card:hover { transform: translateY(-3px); }
+  .s5-feature-card:hover .s5-feature-title { text-shadow: 0 0 12px #ffffff40; }
   .s5-feature-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px; font-weight: 700; line-height: 1.1;
+    font-size: 18px; font-weight: 700; line-height: 1.1;
   }
-  .s5-feature-desc { font-size: 15px; color: #ffffff99; line-height: 1.4; }
+  .s5-feature-desc { font-size: 13px; color: #ffffff99; line-height: 1.3; }
   .s5-steps { display: flex; gap: 8px; flex-wrap: wrap; }
   .s5-step {
     background: #ffffff20; padding: 4px 10px; border-radius: 4px;
@@ -559,6 +574,8 @@
     transition: transform 0.3s ease;
   }
   .s6-card:hover { transform: scale(1.02); }
+  .s6-card:hover .s6-card-title { color: var(--accent); transition: color 0.3s ease; }
+  .s6-card:hover .icon-lg { transform: scale(1.2); transition: transform 0.3s ease; }
   .s6-card-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 22px; font-weight: 700;
@@ -582,6 +599,9 @@
     font-size: 18px; font-weight: 700;
   }
   .s6-mit-desc { font-size: 15px; color: #ffffff99; line-height: 1.4; }
+  .s6-mit-card { transition: transform 0.3s ease, border-color 0.3s ease; }
+  .s6-mit-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .s6-mit-card:hover .s6-mit-title { color: var(--accent); transition: color 0.3s ease; }
 
   /* ============= SLIDE 7 ============= */
   .s7-content {
@@ -599,7 +619,10 @@
   .s7-tool {
     background: #FAFAFA; padding: 20px;
     display: flex; gap: 16px; border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
+  .s7-tool:hover { transform: translateX(4px); box-shadow: -3px 0 12px #DF0D6115; }
+  .s7-tool:hover .s7-tool-title { color: var(--accent); transition: color 0.3s ease; }
   .s7-tool-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 20px; font-weight: 600;
@@ -609,7 +632,10 @@
     padding: 20px; border: 1px solid #E8E8E8;
     display: flex; flex-direction: column; gap: 10px;
     border-radius: 4px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
   }
+  .s7-prompt-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .s7-prompt-card:hover .s7-prompt-title { text-shadow: 0 0 8px var(--accent-40); }
   .s7-prompt-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 18px; font-weight: 700; color: var(--accent);
@@ -652,7 +678,10 @@
   .s7-best-card {
     background: #F5F5F5; border-radius: 8px; padding: 12px 16px;
     display: flex; gap: 10px; align-items: flex-start;
+    transition: transform 0.3s ease, background 0.3s ease;
   }
+  .s7-best-card:hover { transform: translateY(-2px); background: #EFEFEF; }
+  .s7-best-card:hover .s7-best-title { color: var(--accent); transition: color 0.3s ease; }
   .s7-best-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 15px; font-weight: 700;
@@ -699,6 +728,8 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 64px; font-weight: 700; color: var(--accent);
     animation: glowPulse 3s ease-in-out infinite;
+    transition: left 0.15s ease-out, top 0.15s ease-out;
+    pointer-events: none;
   }
 
   /* Utility classes for extracted inline styles */
@@ -786,7 +817,7 @@
   </div>
   <div class="s1-content">
     <div class="s1-main">
-      <div class="s1-badge anim anim-fade-up d2">STRATEGIC BRIEFING · 2025 · 8 MODULES</div>
+      <div class="s1-badge anim anim-fade-up d2">STRATEGIC BRIEFING · 2026 · 8 MODULES</div>
       <h1 class="slide-title s1-title anim anim-fade-up d3">Strategic Implementation of<br>AI Skills &amp; Agentic Workflows</h1>
       <p class="s1-subtitle anim anim-fade-up d4">From basic prompting to production-grade AI systems.<br>Skills, context, code review, and automation that redefine engineering.</p>
       <div class="divider anim anim-fade-up d5"></div>
@@ -839,7 +870,7 @@
 
 <!-- ========== SLIDE 2 — Skills Architecture ========== -->
 <section class="slide slide-light" id="slide-2">
-  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="accent-bar anim d1"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">02 / 08</div>
@@ -906,17 +937,17 @@
 
 <!-- ========== SLIDE 3 — Five Levels ========== -->
 <section class="slide slide-dark" id="slide-3">
-  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="accent-bar anim d1"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">03 / 08</div>
   </div>
-  <div class="slide-header slide-header-pt">
+  <div class="slide-header" style="padding-top:8px">
     <div class="section-label anim anim-fade-up d2">THE FIVE LEVELS OF AI AUTOMATION</div>
-    <h2 class="slide-title anim anim-fade-up d3 fs-54">From Autocomplete to<br>Dark Software Factory</h2>
-    <p class="slide-subtitle anim anim-fade-up d4 fs-20" style="color:var(--gray)">The industry is moving from Level 1 toward Levels 4–5. Higher levels bring new cognitive and architectural challenges.</p>
+    <h2 class="slide-title anim anim-fade-up d3 fs-48">From Autocomplete to<br>Dark Software Factory</h2>
+    <p class="slide-subtitle anim anim-fade-up d4 fs-17" style="color:var(--gray)">The industry is moving from Level 1 toward Levels 4–5. Higher levels bring new cognitive and architectural challenges.</p>
   </div>
-  <div class="s3-content" style="flex:1;padding:16px 80px;overflow:hidden">
+  <div class="s3-content">
     <div class="s3-levels">
       <div class="s3-level anim anim-fade-left d5" role="listitem">
         <span class="s3-level-num" style="color:#DF0D6130">01</span>
@@ -958,7 +989,7 @@
 
 <!-- ========== SLIDE 4 — Brownfield vs Greenfield ========== -->
 <section class="slide slide-light" id="slide-4">
-  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="accent-bar anim d1"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">04 / 08</div>
@@ -1026,14 +1057,14 @@
 
 <!-- ========== SLIDE 5 — Skill Design Patterns ========== -->
 <section class="slide slide-dark" id="slide-5">
-  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="accent-bar anim d1"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">05 / 08</div>
   </div>
-  <div class="slide-header slide-header-pb">
+  <div class="slide-header">
     <div class="section-label anim anim-fade-up d2">PATTERNS FOR SUCCESSFUL SKILL DESIGN</div>
-    <h2 class="slide-title anim anim-fade-up d3 fs-50">Repeatable Patterns for<br>Production-Grade Skills</h2>
+    <h2 class="slide-title anim anim-fade-up d3 fs-48">Repeatable Patterns for<br>Production-Grade Skills</h2>
   </div>
   <div class="s5-content">
     <div class="s5-cards-grid s5-top-row anim anim-fade-up d4">
@@ -1082,7 +1113,7 @@
 
 <!-- ========== SLIDE 6 — Risks & Problems ========== -->
 <section class="slide slide-dark" id="slide-6">
-  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="accent-bar anim d1"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">06 / 08</div>
@@ -1122,7 +1153,7 @@
 
 <!-- ========== SLIDE 7 — Tooling & Self-Evolving Agents ========== -->
 <section class="slide slide-light" id="slide-7">
-  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="accent-bar anim d1"></div>
   <div class="top-bar">
     <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">07 / 08</div>
@@ -1346,6 +1377,24 @@
   // Init progress bar and animate first slide (reuse animateSlide)
   document.getElementById('progressBar').style.width = (100 / totalSlides) + '%';
   animateSlide(document.getElementById('slide-1'));
+
+  // Slide 8: Question mark follows mouse
+  const slide8 = document.getElementById('slide-8');
+  const qMark = slide8.querySelector('.s8-question-mark');
+  const rightPanel = slide8.querySelector('.s8-right-panel');
+
+  slide8.addEventListener('mousemove', (e) => {
+    if (currentSlide !== 8) return;
+    const rect = rightPanel.getBoundingClientRect();
+    // Map mouse position relative to right panel, with offset so ? stays centered
+    const targetX = e.clientX - rect.left - 60;
+    const targetY = e.clientY - rect.top - 60;
+    // Clamp within panel bounds
+    const clampedX = Math.max(-20, Math.min(targetX, rect.width - 100));
+    const clampedY = Math.max(-20, Math.min(targetY, rect.height - 100));
+    qMark.style.left = clampedX + 'px';
+    qMark.style.top = clampedY + 'px';
+  }, { passive: true });
 </script>
 </body>
 </html>
