@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategic Implementation of AI Skills & Agentic Workflows</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --accent: #DF0D61;
+    --accent-20: #DF0D6120;
+    --accent-30: #DF0D6130;
+    --accent-40: #DF0D6140;
+    --blue: #3D46FB;
+    --blue-20: #3D46FB20;
+    --dark: #0D0D0D;
+    --dark-card: #1A1A1A;
+    --white: #FFFFFF;
+    --gray: #7A7A7A;
+    --light-gray: #A0A0A0;
+    --green: #22C55E;
+    --red: #EF4444;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--dark);
+  }
+
+  /* Slide Container */
+  .slides-wrapper {
+    position: relative;
+    width: 100vw; height: 100vh;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Element Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 20px #DF0D6130; }
+    50% { box-shadow: 0 0 40px #DF0D6160; }
+  }
+
+  .slide .anim {
+    opacity: 0;
+  }
+  .slide.active .anim {
+    animation-fill-mode: forwards;
+  }
+  .slide.active .anim-fade-up { animation: fadeInUp 0.7s ease forwards; }
+  .slide.active .anim-fade-left { animation: fadeInLeft 0.7s ease forwards; }
+  .slide.active .anim-fade-right { animation: fadeInRight 0.7s ease forwards; }
+  .slide.active .anim-scale { animation: scaleIn 0.6s ease forwards; }
+  .slide.active .anim-fade { animation: fadeIn 0.5s ease forwards; }
+  .slide.active .anim-slide-down { animation: slideDown 0.6s ease forwards; }
+
+  .d1 { animation-delay: 0.1s !important; }
+  .d2 { animation-delay: 0.2s !important; }
+  .d3 { animation-delay: 0.3s !important; }
+  .d4 { animation-delay: 0.4s !important; }
+  .d5 { animation-delay: 0.5s !important; }
+  .d6 { animation-delay: 0.6s !important; }
+  .d7 { animation-delay: 0.7s !important; }
+  .d8 { animation-delay: 0.8s !important; }
+  .d9 { animation-delay: 0.9s !important; }
+  .d10 { animation-delay: 1.0s !important; }
+  .d11 { animation-delay: 1.1s !important; }
+  .d12 { animation-delay: 1.2s !important; }
+
+  /* Common Styles */
+  .slide-dark { background: var(--dark); color: var(--white); }
+  .slide-light { background: var(--white); color: var(--dark); }
+
+  .top-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 60px 0;
+    position: relative; z-index: 2;
+  }
+  .top-bar .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 24px;
+  }
+  .top-bar .slide-num {
+    font-size: 16px; color: var(--gray);
+  }
+  .accent-bar {
+    height: 6px; width: 100%; background: var(--accent);
+  }
+  .accent-bar-left {
+    position: absolute; left: 0; top: 0;
+    width: 12px; height: 100%; background: var(--accent);
+  }
+  .bottom-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 60px 24px;
+    font-size: 14px; color: var(--gray);
+    margin-top: auto;
+  }
+  .bottom-bar .copy {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+  }
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--accent); letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .slide-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .slide-subtitle {
+    line-height: 1.6; max-width: 1000px;
+  }
+  .divider {
+    width: 120px; height: 3px; background: var(--accent);
+  }
+
+  /* Navigation Dots */
+  .nav-dots {
+    position: fixed; bottom: 30px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 12px; z-index: 100;
+  }
+  .nav-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #ffffff30; border: none; cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .nav-dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-40);
+    transform: scale(1.2);
+  }
+  .nav-dot:hover { background: #ffffff60; }
+
+  /* Progress Bar */
+  .progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px; background: var(--accent);
+    z-index: 100; transition: width 0.4s ease;
+  }
+
+  /* Keyboard hint */
+  .key-hint {
+    position: fixed; bottom: 30px; right: 30px;
+    font-size: 12px; color: #ffffff40;
+    z-index: 100;
+    font-family: 'Inter', sans-serif;
+  }
+  .key-hint kbd {
+    background: #ffffff15; border: 1px solid #ffffff20;
+    padding: 2px 8px; border-radius: 4px;
+    font-family: inherit; margin: 0 2px;
+  }
+
+  /* ============= SLIDE 1 ============= */
+  .s1-content {
+    flex: 1; display: flex; padding: 0 60px;
+    position: relative;
+  }
+  .s1-main {
+    display: flex; flex-direction: column;
+    justify-content: center; gap: 32px;
+    max-width: 1100px; z-index: 2;
+  }
+  .s1-badge {
+    display: inline-flex;
+    background: var(--accent-20);
+    padding: 8px 20px; border-radius: 4px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 500;
+    color: var(--accent); letter-spacing: 2.5px;
+    width: fit-content;
+  }
+  .s1-title {
+    font-size: clamp(40px, 5vw, 80px);
+  }
+  .s1-subtitle {
+    font-size: clamp(18px, 2vw, 28px); color: var(--light-gray);
+  }
+  .s1-pillars {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    max-width: 900px;
+  }
+  .s1-pillar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 4px 0 4px 12px;
+    border-left: 2px solid var(--accent);
+  }
+  .s1-pillar-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px; font-weight: 700; color: var(--accent);
+  }
+  .s1-pillar-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px; font-weight: 600;
+  }
+  .s1-pillar-desc {
+    font-size: 13px; color: var(--gray); line-height: 1.3;
+  }
+  .s1-right-panel {
+    position: absolute; right: 0; top: 120px;
+    width: 560px; height: 840px;
+    background: #14141480; overflow: hidden;
+  }
+  .s1-grid-line {
+    position: absolute; height: 1px; width: 100%;
+    background: #ffffff10;
+  }
+  .s1-node {
+    position: absolute; padding: 8px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px; font-weight: 600;
+    border-radius: 4px;
+  }
+
+  /* ============= SLIDE 2 ============= */
+  .s2-content {
+    flex: 1; display: flex; gap: 32px;
+    padding: 0 80px; overflow: hidden;
+  }
+  .s2-col {
+    flex: 1; display: flex; flex-direction: column;
+    gap: 8px; overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .s2-col::-webkit-scrollbar { display: none; }
+  .s2-col-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700;
+  }
+  .s2-table {
+    border: 1px solid #0D0D0D15; border-radius: 8px;
+    overflow: hidden;
+  }
+  .s2-table-header {
+    display: grid; grid-template-columns: 180px 100px 1fr;
+    background: #F5F5F5; padding: 8px 12px; gap: 8px;
+    font-size: 13px; font-weight: 700;
+  }
+  .s2-table-row {
+    display: grid; grid-template-columns: 180px 100px 1fr;
+    padding: 8px 12px; gap: 8px; border-top: 1px solid #0D0D0D10;
+    font-size: 14px;
+  }
+  .s2-table-row .comp { color: var(--accent); font-weight: 700; font-size: 15px; }
+  .s2-table-row .scope { color: #0D0D0D99; font-size: 13px; }
+  .s2-rec {
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .s2-rec-num {
+    min-width: 28px; height: 28px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 700; color: white;
+  }
+  .s2-rec-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px; font-weight: 700;
+  }
+  .s2-rec-desc {
+    font-size: 14px; color: #0D0D0D99; line-height: 1.4;
+  }
+  .s2-level {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .s2-level-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px; font-weight: 700; color: var(--accent);
+  }
+  .s2-level-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700;
+  }
+  .s2-level-desc {
+    font-size: 16px; color: #0D0D0D99; line-height: 1.4;
+  }
+  .s2-mcp-box {
+    background: var(--dark); border-radius: 8px;
+    padding: 16px 20px; display: flex; gap: 12px;
+    align-items: center; color: white;
+    font-size: 15px; line-height: 1.4;
+  }
+  .s2-agile-box {
+    background: #F5F5F5; border-radius: 8px; padding: 12px;
+  }
+  .s2-cycle {
+    display: flex; gap: 8px; align-items: center;
+    justify-content: space-between; flex-wrap: wrap;
+  }
+  .s2-cycle-step {
+    padding: 8px 14px; border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 700; color: white;
+  }
+  .s2-auto-box {
+    background: var(--dark); border-radius: 8px;
+    padding: 12px; color: white;
+  }
+  .s2-auto-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 700; color: white;
+  }
+  .s2-auto-item {
+    font-size: 13px; color: #ffffff99; line-height: 1.3;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+
+  /* ============= SLIDE 3 ============= */
+  .s3-content {
+    padding: 0 80px; display: flex; flex-direction: column; gap: 16px;
+  }
+  .s3-levels {
+    display: flex; flex-direction: column; gap: 12px;
+    flex: 1;
+  }
+  .s3-level {
+    display: flex; align-items: center; gap: 32px;
+    background: var(--dark-card); padding: 20px 32px;
+    border: 1px solid #DF0D6115; flex: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .s3-level:hover {
+    transform: translateX(8px);
+    box-shadow: -4px 0 20px #DF0D6120;
+  }
+  .s3-level-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 44px; font-weight: 700;
+    min-width: 60px;
+  }
+  .s3-level-info { min-width: 240px; }
+  .s3-level-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 23px; font-weight: 600;
+  }
+  .s3-level-sub { font-size: 16px; color: var(--gray); margin-top: 4px; }
+  .s3-level-desc {
+    font-size: 18px; color: var(--light-gray); line-height: 1.5;
+    flex: 1;
+  }
+  .s3-level-bar {
+    width: 4px; height: 50px; min-width: 4px;
+  }
+  .s3-level-5 {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    border-width: 2px;
+  }
+  .s3-level-5 .s3-level-num,
+  .s3-level-5 .s3-level-title { color: white; }
+  .s3-level-5 .s3-level-sub { color: #ffffff90; }
+  .s3-level-5 .s3-level-desc { color: #ffffffcc; }
+
+  /* ============= SLIDE 4 ============= */
+  .s4-content {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 0 80px; gap: 24px; overflow: hidden;
+  }
+  .s4-cols {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    flex: 1; overflow: hidden;
+  }
+  .s4-col {
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .s4-col-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px;
+    border-radius: 8px 8px 0 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px; font-weight: 700; color: white;
+  }
+  .s4-col-body {
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+    display: flex; flex-direction: column; gap: 10px;
+    flex: 1; overflow-y: auto;
+    scrollbar-width: none;
+    font-size: 15px;
+  }
+  .s4-col-body::-webkit-scrollbar { display: none; }
+  .s4-col-body .desc { color: #0D0D0D99; line-height: 1.5; }
+  .s4-section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  }
+  .s4-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14px; line-height: 1.4;
+  }
+  .s4-item .icon { min-width: 18px; height: 18px; }
+  .s4-divider { height: 1px; background: #0D0D0D15; }
+
+  /* ============= SLIDE 5 ============= */
+  .s5-content {
+    padding: 0 80px; flex: 1;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .s5-cards-grid {
+    display: grid; gap: 16px;
+  }
+  .s5-top-row { grid-template-columns: 1fr 1fr 1fr; }
+  .s5-bottom-row { grid-template-columns: 1fr 1fr 1fr; }
+  .s5-card {
+    background: var(--dark-card); padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+    border: 1px solid #ffffff10;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .s5-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-40);
+  }
+  .s5-card-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px; font-weight: 700; color: #DF0D6150;
+  }
+  .s5-card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 600; line-height: 1.3;
+  }
+  .s5-card-desc {
+    font-size: 16px; color: var(--gray); line-height: 1.5;
+  }
+  .s5-deploy-card {
+    background: var(--accent) !important; border-color: var(--accent) !important;
+    justify-content: center;
+  }
+  .s5-deploy-card .s5-card-desc { color: #ffffffcc; }
+  .s5-feature-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+  }
+  .s5-feature-card {
+    border-radius: 12px; padding: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .s5-feature-card.red { background: var(--accent); color: white; }
+  .s5-feature-card.dark { background: var(--dark-card); color: white; }
+  .s5-feature-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 700; line-height: 1.1;
+  }
+  .s5-feature-desc { font-size: 15px; color: #ffffff99; line-height: 1.4; }
+  .s5-steps { display: flex; gap: 8px; flex-wrap: wrap; }
+  .s5-step {
+    background: #ffffff20; padding: 4px 10px; border-radius: 4px;
+    font-size: 11px; font-weight: 600;
+  }
+  .s5-ctx-item {
+    display: flex; gap: 8px; align-items: center;
+    font-size: 12px; color: #ffffff80;
+  }
+  .s5-flow-item {
+    display: flex; gap: 8px; align-items: center;
+    font-size: 12px; color: #ffffff80;
+  }
+  .s5-flow-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 700; color: var(--green);
+  }
+
+  /* ============= SLIDE 6 ============= */
+  .s6-content {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 0 80px; gap: 8px; overflow: hidden;
+  }
+  .s6-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+    flex: 1;
+  }
+  .s6-col { display: flex; flex-direction: column; gap: 20px; }
+  .s6-card {
+    background: var(--dark-card); border-radius: 8px;
+    padding: 24px; display: flex; flex-direction: column; gap: 12px;
+    flex: 1;
+    transition: transform 0.3s ease;
+  }
+  .s6-card:hover { transform: scale(1.02); }
+  .s6-card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 700;
+  }
+  .s6-card-desc { font-size: 16px; color: #ffffff99; line-height: 1.5; }
+  .s6-mit-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    letter-spacing: 2px;
+  }
+  .s6-mit-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+  }
+  .s6-mit-card {
+    background: var(--dark-card); border-radius: 8px;
+    padding: 14px; display: flex; flex-direction: column; gap: 10px;
+    border: 1px solid var(--accent-40);
+  }
+  .s6-mit-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 700;
+  }
+  .s6-mit-desc { font-size: 15px; color: #ffffff99; line-height: 1.4; }
+
+  /* ============= SLIDE 7 ============= */
+  .s7-content {
+    flex: 1; display: grid;
+    grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+    padding: 0 80px; overflow: hidden;
+  }
+  .s7-col { display: flex; flex-direction: column; gap: 16px; overflow-y: auto; scrollbar-width: none; }
+  .s7-col::-webkit-scrollbar { display: none; }
+  .s7-col-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px; font-weight: 600;
+  }
+  .s7-tool {
+    background: #FAFAFA; padding: 20px;
+    display: flex; gap: 16px; border-radius: 4px;
+  }
+  .s7-tool-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 600;
+  }
+  .s7-tool-desc { font-size: 16px; color: var(--gray); line-height: 1.5; }
+  .s7-prompt-card {
+    padding: 20px; border: 1px solid #E8E8E8;
+    display: flex; flex-direction: column; gap: 10px;
+    border-radius: 4px;
+  }
+  .s7-prompt-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 700; color: var(--accent);
+  }
+  .s7-prompt-desc { font-size: 16px; color: var(--gray); line-height: 1.5; }
+  .s7-khryas-box {
+    background: var(--dark); border-radius: 8px;
+    padding: 20px; color: white;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .s7-khryas-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px; font-weight: 700;
+  }
+  .s7-khryas-desc { font-size: 15px; color: var(--light-gray); line-height: 1.5; }
+  .s7-phase {
+    display: flex; gap: 10px; align-items: center;
+    font-size: 15px; font-weight: 500;
+  }
+  .s7-conclusion {
+    background: #DF0D6110; border: 1px solid var(--accent-40);
+    border-radius: 8px; padding: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .s7-conclusion-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; color: var(--accent);
+  }
+  .s7-conclusion-desc { font-size: 15px; color: var(--gray); line-height: 1.5; }
+  .s7-self-evolve {
+    background: var(--dark); border-radius: 12px;
+    padding: 16px; color: white;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .s7-best-bar {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;
+    padding: 16px 80px 0;
+  }
+  .s7-best-card {
+    background: #F5F5F5; border-radius: 8px; padding: 12px 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .s7-best-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 700;
+  }
+  .s7-best-desc { font-size: 13px; color: #0D0D0D99; line-height: 1.3; }
+
+  /* ============= SLIDE 8 ============= */
+  .s8-content {
+    flex: 1; display: flex; align-items: center;
+    justify-content: center; position: relative;
+  }
+  .s8-center {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 48px; z-index: 2;
+    text-align: center;
+  }
+  .s8-badge {
+    background: var(--accent-20); padding: 8px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 500;
+    color: var(--accent); letter-spacing: 3px;
+  }
+  .s8-title {
+    font-size: clamp(60px, 8vw, 120px);
+    letter-spacing: -4px; line-height: 1;
+  }
+  .s8-divider {
+    width: 160px; height: 4px; background: var(--accent);
+  }
+  .s8-subtitle {
+    font-size: 28px; color: var(--gray); line-height: 1.5;
+    max-width: 900px;
+  }
+  .s8-right-panel {
+    position: absolute; right: 0; top: 120px;
+    width: 560px; height: 840px;
+    background: #14141480;
+  }
+  .s8-question-mark {
+    position: absolute; left: 220px; top: 320px;
+    width: 120px; height: 120px; border-radius: 60px;
+    background: var(--accent-20); border: 2px solid var(--accent-40);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 64px; font-weight: 700; color: var(--accent);
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .s1-right-panel, .s8-right-panel { display: none; }
+    .s4-cols { grid-template-columns: 1fr; overflow-y: auto; }
+    .s5-top-row, .s5-bottom-row, .s5-feature-row { grid-template-columns: 1fr 1fr; }
+    .s6-grid, .s6-mit-row { grid-template-columns: 1fr 1fr; }
+    .s7-content { grid-template-columns: 1fr 1fr; }
+    .s7-best-bar { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .s1-pillars { grid-template-columns: 1fr; }
+    .s5-top-row, .s5-bottom-row, .s5-feature-row { grid-template-columns: 1fr; }
+    .s6-grid, .s6-mit-row { grid-template-columns: 1fr; }
+    .s7-content { grid-template-columns: 1fr; }
+    .s7-best-bar { grid-template-columns: 1fr; }
+    .s3-level { flex-direction: column; gap: 12px; padding: 16px; }
+    .top-bar, .bottom-bar { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ========== SLIDE 1 — Title ========== -->
+<div class="slides-wrapper">
+<section class="slide slide-dark active" id="slide-1">
+  <div class="accent-bar-left"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="slide-num anim anim-fade d1">01 / 08</div>
+  </div>
+  <div class="s1-content">
+    <div class="s1-main">
+      <div class="s1-badge anim anim-fade-up d2">STRATEGIC BRIEFING · 2025 · 8 MODULES</div>
+      <h1 class="slide-title s1-title anim anim-fade-up d3">Strategic Implementation of<br>AI Skills &amp; Agentic Workflows</h1>
+      <p class="s1-subtitle anim anim-fade-up d4">From basic prompting to production-grade AI systems.<br>Skills, context, code review, and automation that redefine engineering.</p>
+      <div class="divider anim anim-fade-up d5"></div>
+      <div class="s1-pillars">
+        <div class="s1-pillar anim anim-fade-left d5">
+          <span class="s1-pillar-num">01</span>
+          <div><div class="s1-pillar-title">Skills Architecture</div><div class="s1-pillar-desc">SKILL.md structure, file roles &amp; MCP integration</div></div>
+        </div>
+        <div class="s1-pillar anim anim-fade-left d6">
+          <span class="s1-pillar-num">02</span>
+          <div><div class="s1-pillar-title">Five Levels of Automation</div><div class="s1-pillar-desc">From autocomplete to dark software factory</div></div>
+        </div>
+        <div class="s1-pillar anim anim-fade-left d7">
+          <span class="s1-pillar-num">03</span>
+          <div><div class="s1-pillar-title">Brownfield vs Greenfield</div><div class="s1-pillar-desc">Pros, cons &amp; actionable tips for each path</div></div>
+        </div>
+        <div class="s1-pillar anim anim-fade-left d8">
+          <span class="s1-pillar-num">04</span>
+          <div><div class="s1-pillar-title">Skill Design Patterns</div><div class="s1-pillar-desc">Repeatable patterns for production-grade skills</div></div>
+        </div>
+        <div class="s1-pillar anim anim-fade-right d5">
+          <span class="s1-pillar-num">05</span>
+          <div><div class="s1-pillar-title">Risks &amp; Problems</div><div class="s1-pillar-desc">What can go wrong with AI automation at scale</div></div>
+        </div>
+        <div class="s1-pillar anim anim-fade-right d6">
+          <span class="s1-pillar-num">06</span>
+          <div><div class="s1-pillar-title">Context Battle &amp; Mitigation</div><div class="s1-pillar-desc">Risks, context overflow &amp; mitigation strategies</div></div>
+        </div>
+        <div class="s1-pillar anim anim-fade-right d7">
+          <span class="s1-pillar-num">07</span>
+          <div><div class="s1-pillar-title">Tooling, Khryas &amp; Best Practices</div><div class="s1-pillar-desc">Khryas technique, prompting &amp; self-evolving agents</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="s1-right-panel anim anim-fade d9">
+      <div class="s1-grid-line" style="top:0"></div>
+      <div class="s1-grid-line" style="top:210px"></div>
+      <div class="s1-grid-line" style="top:420px"></div>
+      <div class="s1-grid-line" style="top:630px"></div>
+      <div class="s1-node anim anim-scale d10" style="background:var(--accent);color:white;left:120px;top:220px">SKILL.md</div>
+      <div class="s1-node anim anim-scale d11" style="border:1px solid var(--blue);color:var(--blue);left:200px;top:380px">MCP Protocol</div>
+      <div class="s1-node anim anim-scale d12" style="border:1px solid #DF0D6180;color:#DF0D6180;left:80px;top:500px">Sub-Agents</div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+
+<!-- ========== SLIDE 2 — Skills Architecture ========== -->
+<section class="slide slide-light" id="slide-2">
+  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
+    <div class="slide-num anim anim-fade d1">02 / 08</div>
+  </div>
+  <div style="padding:0 80px">
+    <div class="section-label anim anim-fade-up d2">THE ARCHITECTURE OF CLAUDE SKILLS</div>
+    <h2 class="slide-title anim anim-fade-up d3" style="font-size:48px;color:var(--dark);margin:8px 0">Skills as a Knowledge Layer</h2>
+    <p class="anim anim-fade-up d4" style="color:#0D0D0D99;font-size:17px;line-height:1.5;max-width:1200px">Packaged instructions that teach Claude repeatable recipes — combining built-in capabilities with external tools.</p>
+  </div>
+  <div class="s2-content" style="margin-top:16px">
+    <div class="s2-col anim anim-fade-left d5">
+      <div class="s2-col-title">Core File Structure</div>
+      <div class="s2-table">
+        <div class="s2-table-header"><span>Component</span><span>Scope</span><span>Description</span></div>
+        <div class="s2-table-row"><span class="comp">SKILL.md</span><span class="scope">required</span><span>Main skill definition with YAML frontmatter</span></div>
+        <div class="s2-table-row"><span class="comp" style="color:var(--dark)">scripts/</span><span class="scope">optional</span><span>Executable code (Python, Bash) for deterministic tasks</span></div>
+        <div class="s2-table-row"><span class="comp" style="color:var(--dark)">references/</span><span class="scope">optional</span><span>Docs, API specs, inspection examples</span></div>
+        <div class="s2-table-row"><span class="comp" style="color:var(--dark)">assets/</span><span class="scope">optional</span><span>Templates, icons, or static files used in output</span></div>
+      </div>
+      <div class="s2-col-title" style="margin-top:8px">Skill Creation Recommendations</div>
+      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--accent)">1</div><div><div class="s2-rec-title">One Skill Per Domain</div><div class="s2-rec-desc">Isolate each skill to a single responsibility — deploy, test, refactor, review.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--accent)">2</div><div><div class="s2-rec-title">Include Real Examples</div><div class="s2-rec-desc">Add working code snippets, CLI commands, and expected outputs.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--accent)">3</div><div><div class="s2-rec-title">Pin Project Conventions</div><div class="s2-rec-desc">Encode naming, folder structure, testing patterns, and commit style.</div></div></div>
+      <div class="s2-col-title" style="margin-top:8px">Agile Skill Lifecycle</div>
+      <div class="s2-agile-box">
+        <div class="s2-cycle">
+          <span class="s2-cycle-step" style="background:var(--accent)">Draft</span>
+          <span style="color:#0D0D0D40">→</span>
+          <span class="s2-cycle-step" style="background:var(--blue)">Test</span>
+          <span style="color:#0D0D0D40">→</span>
+          <span class="s2-cycle-step" style="background:var(--dark)">Deploy</span>
+          <span style="color:#0D0D0D40">→</span>
+          <span class="s2-cycle-step" style="background:var(--green)">Observe</span>
+          <span style="color:#0D0D0D40">→</span>
+          <span class="s2-cycle-step" style="background:#F59E0B">Iterate</span>
+        </div>
+        <p style="color:#0D0D0D99;font-size:15px;line-height:1.4;margin-top:8px">Treat skills like sprints. Ship small, measure results, improve weekly.</p>
+      </div>
+      <div class="s2-auto-box" style="margin-top:4px">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px"><span style="color:var(--blue)">🔄</span><span class="s2-auto-title">Auto-Update Strategy</span></div>
+        <div class="s2-auto-item"><span style="color:var(--blue)">✓</span> CI hooks detect skill drift — auto-flag when APIs change</div>
+        <div class="s2-auto-item" style="margin-top:4px"><span style="color:var(--blue)">✓</span> Agent logs feed back — failures auto-generate skill improvement PRs</div>
+        <div class="s2-auto-item" style="margin-top:4px"><span style="color:var(--blue)">✓</span> Scheduled re-validation — weekly test runs catch silent regressions</div>
+      </div>
+    </div>
+    <div class="s2-col anim anim-fade-right d6">
+      <div class="s2-col-title">Three Levels of Progressive Disclosure</div>
+      <div class="s2-level"><span class="s2-level-num">L1</span><div><div class="s2-level-title">YAML Frontmatter</div><div class="s2-level-desc">Always loaded. Short description tells Claude when to trigger the skill.</div></div></div>
+      <div class="s2-level"><span class="s2-level-num">L2</span><div><div class="s2-level-title">SKILL.md Body</div><div class="s2-level-desc">Loaded only when Claude identifies the skill as relevant to the user's request.</div></div></div>
+      <div class="s2-level"><span class="s2-level-num">L3</span><div><div class="s2-level-title">Linked Files</div><div class="s2-level-desc">On-the-fly: Claude pulls in any extra task-specific details.</div></div></div>
+      <div class="s2-mcp-box"><span>🔌</span><span>Synergy with MCP — APIs, file systems, DBs, other services. Together they build fully integrated workflows.</span></div>
+      <div class="s2-col-title" style="margin-top:8px">Best Practices</div>
+      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--blue)">4</div><div><div class="s2-rec-title">Version &amp; Test Skills</div><div class="s2-rec-desc">Treat skills like code — git versioning, peer review, and automated validation.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--blue)">5</div><div><div class="s2-rec-title">Use Progressive Disclosure</div><div class="s2-rec-desc">Keep YAML frontmatter minimal. Load heavy context only when triggered.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--blue)">6</div><div><div class="s2-rec-title">Bind to Project Stack</div><div class="s2-rec-desc">Reference your actual frameworks, ORMs, CI tools. A Django skill for a Django project beats a generic Python skill.</div></div></div>
+      <div class="s2-mcp-box" style="margin-top:4px"><span>💡</span><span>Start with 3 skills: deploy, test, and review. Expand only after these are proven and adopted by the team.</span></div>
+    </div>
+  </div>
+  <div class="bottom-bar" style="color:#B0B0B0">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+
+<!-- ========== SLIDE 3 — Five Levels ========== -->
+<section class="slide slide-dark" id="slide-3">
+  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="slide-num anim anim-fade d1">03 / 08</div>
+  </div>
+  <div style="padding:16px 80px 0">
+    <div class="section-label anim anim-fade-up d2">THE FIVE LEVELS OF AI AUTOMATION</div>
+    <h2 class="slide-title anim anim-fade-up d3" style="font-size:54px;margin:8px 0">From Autocomplete to<br>Dark Software Factory</h2>
+    <p class="slide-subtitle anim anim-fade-up d4" style="color:var(--gray);font-size:20px">The industry is moving from Level 1 toward Levels 4–5. Higher levels bring new cognitive and architectural challenges.</p>
+  </div>
+  <div class="s3-content" style="flex:1;padding:16px 80px;overflow:hidden">
+    <div class="s3-levels">
+      <div class="s3-level anim anim-fade-left d5">
+        <span class="s3-level-num" style="color:#DF0D6130">01</span>
+        <div class="s3-level-info"><div class="s3-level-title">Autocomplete</div><div class="s3-level-sub">Smart Suggestions</div></div>
+        <div class="s3-level-desc">AI suggests code snippets. Nothing hits disk without human approval.</div>
+        <div class="s3-level-bar" style="background:#DF0D6130"></div>
+      </div>
+      <div class="s3-level anim anim-fade-left d6">
+        <span class="s3-level-num" style="color:#DF0D6145">02</span>
+        <div class="s3-level-info"><div class="s3-level-title">Junior Developer</div><div class="s3-level-sub">Boilerplate &amp; Tests</div></div>
+        <div class="s3-level-desc">AI writes boilerplate, tests, docstrings. One file at a time. Productivity boost in coding phase.</div>
+        <div class="s3-level-bar" style="background:#DF0D6145"></div>
+      </div>
+      <div class="s3-level anim anim-fade-left d7">
+        <span class="s3-level-num" style="color:#DF0D6160">03</span>
+        <div class="s3-level-info"><div class="s3-level-title">Human in the Loop</div><div class="s3-level-sub">Tesla Autopilot Mode</div></div>
+        <div class="s3-level-desc">Agents do the work, humans review diffs. Cognitive load goes up as oversight demands grow.</div>
+        <div class="s3-level-bar" style="background:#DF0D6160"></div>
+      </div>
+      <div class="s3-level anim anim-fade-left d8">
+        <span class="s3-level-num" style="color:#DF0D6190">04</span>
+        <div class="s3-level-info"><div class="s3-level-title">Engineering Team</div><div class="s3-level-sub">Unsupervised Execution</div></div>
+        <div class="s3-level-desc">AI works unsupervised. Humans write specs and review final results — like a Product Manager.</div>
+        <div class="s3-level-bar" style="background:#DF0D6190"></div>
+      </div>
+      <div class="s3-level s3-level-5 anim anim-fade-left d9">
+        <span class="s3-level-num">05</span>
+        <div class="s3-level-info"><div class="s3-level-title">Dark Software Factory</div><div class="s3-level-sub">Full Autonomy</div></div>
+        <div class="s3-level-desc">Humans set goals, not code. English specs in, working product out. Lights off — robots don't need them.</div>
+        <div class="s3-level-bar" style="background:white"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+
+<!-- ========== SLIDE 4 — Brownfield vs Greenfield ========== -->
+<section class="slide slide-light" id="slide-4">
+  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
+    <div class="slide-num anim anim-fade d1">04 / 08</div>
+  </div>
+  <div style="padding:0 80px">
+    <div class="section-label anim anim-fade-up d2">BROWNFIELD VS GREENFIELD</div>
+    <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;color:var(--dark);margin:8px 0">Two Paths to AI Implementation</h2>
+    <p class="anim anim-fade-up d4" style="color:#0D0D0D99;font-size:18px;line-height:1.5">Retrofit AI into legacy systems or build AI-native from scratch. Each path has trade-offs.</p>
+  </div>
+  <div class="s4-content" style="margin-top:16px">
+    <div class="s4-cols">
+      <div class="s4-col anim anim-fade-left d5">
+        <div class="s4-col-header" style="background:var(--accent)">🏢 Brownfield</div>
+        <div class="s4-col-body" style="background:#FFF0F3">
+          <p class="desc">Retrofit AI into existing codebase, legacy systems, and established workflows.</p>
+          <div class="s4-section-label" style="color:var(--green)">PROS</div>
+          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Existing users, revenue, and proven business logic</div>
+          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Incremental adoption — no big-bang migration</div>
+          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Real production data to train and validate skills</div>
+          <div class="s4-divider"></div>
+          <div class="s4-section-label" style="color:var(--red)">CONS</div>
+          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Legacy code fights AI context limits</div>
+          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Technical debt slows AI skill adoption</div>
+          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Team resistance to changing established patterns</div>
+          <div class="s4-divider"></div>
+          <div class="s4-section-label" style="color:var(--accent)">WHAT TO DO</div>
+          <div class="s4-item"><span class="icon" style="color:var(--accent)">🔍</span> Audit legacy code — map AI-ready vs refactor-first modules</div>
+          <div class="s4-item"><span class="icon" style="color:var(--accent)">📦</span> Start with L1 skills on isolated services, expand gradually</div>
+          <div class="s4-item"><span class="icon" style="color:var(--accent)">🛡</span> Add guardrails — validate AI output against existing tests</div>
+          <div class="s4-item"><span class="icon" style="color:var(--accent)">🔀</span> Use feature flags to A/B test AI skills vs manual workflows</div>
+          <div class="s4-divider"></div>
+          <div class="s4-section-label" style="color:var(--accent)">DEPLOYMENT BOTTLENECK</div>
+          <div class="s4-item"><span class="icon" style="color:var(--accent)">⏱</span> CI/CD pipelines can take hours with high flaky-test failure rates</div>
+          <div class="s4-item"><span class="icon" style="color:var(--accent)">📡</span> Build predictive testing — map changed files to relevant test suites only</div>
+        </div>
+      </div>
+      <div class="s4-col anim anim-fade-right d6">
+        <div class="s4-col-header" style="background:var(--blue)">🌱 Greenfield</div>
+        <div class="s4-col-body" style="background:#F0F0FF">
+          <p class="desc">Build AI-native from day one with agentic architecture, clean skill layers, and no legacy constraints.</p>
+          <div class="s4-section-label" style="color:var(--green)">PROS</div>
+          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> AI-first architecture — skills, agents, MCP built in</div>
+          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Reach Level 3+ automation 3x faster</div>
+          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Clean context pipelines — no legacy noise</div>
+          <div class="s4-divider"></div>
+          <div class="s4-section-label" style="color:var(--red)">CONS</div>
+          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> No existing users, revenue, or market validation</div>
+          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Higher upfront investment before any return</div>
+          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Risk of over-engineering without real-world feedback</div>
+          <div class="s4-divider"></div>
+          <div class="s4-section-label" style="color:var(--blue)">WHAT TO DO</div>
+          <div class="s4-item"><span class="icon" style="color:var(--blue)">📐</span> Design skill layers first — define L1/L2/L3 from the start</div>
+          <div class="s4-item"><span class="icon" style="color:var(--blue)">⚡</span> Build MCP-native architecture — agents and tools as first-class</div>
+          <div class="s4-item"><span class="icon" style="color:var(--blue)">🧪</span> Ship MVP fast — validate with real users before scaling skills</div>
+          <div class="s4-item"><span class="icon" style="color:var(--blue)">🔄</span> Set up CI/CD for skills — auto-test, version, and deploy iteratively</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar" style="color:#B0B0B0">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+
+<!-- ========== SLIDE 5 — Skill Design Patterns ========== -->
+<section class="slide slide-dark" id="slide-5">
+  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="slide-num anim anim-fade d1">05 / 08</div>
+  </div>
+  <div style="padding:0 80px 8px">
+    <div class="section-label anim anim-fade-up d2">PATTERNS FOR SUCCESSFUL SKILL DESIGN</div>
+    <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;margin:8px 0">Repeatable Patterns for<br>Production-Grade Skills</h2>
+  </div>
+  <div class="s5-content">
+    <div class="s5-cards-grid s5-top-row anim anim-fade-up d4">
+      <div class="s5-card"><div class="s5-card-num">01</div><div class="s5-card-title">Sequential Workflow Orchestration</div><div class="s5-card-desc">Define step order, dependencies, and rollback plans for processes like onboarding.</div></div>
+      <div class="s5-card"><div class="s5-card-num">02</div><div class="s5-card-title">Multi-MCP Coordination</div><div class="s5-card-desc">Orchestrate handoffs across services — Figma, Drive, Linear — in one workflow.</div></div>
+      <div class="s5-card"><div class="s5-card-num">03</div><div class="s5-card-title">Iterative Refinement</div><div class="s5-card-desc">Validation scripts check AI output and trigger refinement loops until quality gates pass.</div></div>
+    </div>
+    <div class="s5-cards-grid s5-bottom-row anim anim-fade-up d5">
+      <div class="s5-card"><div class="s5-card-num">04</div><div class="s5-card-title">Context-Aware Tool Selection</div><div class="s5-card-desc">AI picks the right tool for the job — cloud storage for big files, Notion for collaboration.</div></div>
+      <div class="s5-card"><div class="s5-card-num">05</div><div class="s5-card-title">Domain-Specific Intelligence</div><div class="s5-card-desc">Embed domain rules (compliance, security) that must run before any tool is called.</div></div>
+      <div class="s5-card s5-deploy-card"><div style="font-size:32px">⚙️</div><div class="s5-card-title">Deployment</div><div class="s5-card-desc">Host on GitHub with README. Provide .zip for Claude.ai. Admins deploy workspace-wide.</div></div>
+    </div>
+    <div class="s5-feature-row anim anim-fade-up d6">
+      <div class="s5-feature-card red">
+        <div class="s5-feature-title">AI Code Review</div>
+        <div class="s5-feature-desc">Automated PR review with context-aware agents. Catches bugs, style violations, security issues.</div>
+        <div class="s5-steps">
+          <span class="s5-step">Diff Analysis</span>
+          <span class="s5-step">Pattern Check</span>
+          <span class="s5-step">Security Scan</span>
+          <span class="s5-step">Auto-Fix</span>
+        </div>
+      </div>
+      <div class="s5-feature-card dark">
+        <div class="s5-feature-title">Code Context for Realization</div>
+        <div class="s5-feature-desc">Feed real project code into skill context. The agent understands your architecture.</div>
+        <div class="s5-ctx-item">📁 Project structure → architecture-aware generation</div>
+        <div class="s5-ctx-item">💻 Existing patterns → consistent style output</div>
+        <div class="s5-ctx-item">🧪 Test suites → generated code ships with tests</div>
+      </div>
+      <div class="s5-feature-card dark">
+        <div class="s5-feature-title">End-to-End Realization Flow</div>
+        <div class="s5-flow-item"><span class="s5-flow-num">1.</span> Skill generates code from context</div>
+        <div class="s5-flow-item"><span class="s5-flow-num">2.</span> AI reviewer validates against rules</div>
+        <div class="s5-flow-item"><span class="s5-flow-num">3.</span> Auto-fix applies corrections</div>
+        <div class="s5-flow-item"><span class="s5-flow-num">4.</span> Human approves final PR</div>
+        <div class="s5-flow-item"><span class="s5-flow-num">5.</span> Feedback loops back into skills</div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+
+<!-- ========== SLIDE 6 — Risks & Problems ========== -->
+<section class="slide slide-dark" id="slide-6">
+  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="slide-num anim anim-fade d1">06 / 08</div>
+  </div>
+  <div style="padding:0 80px">
+    <div class="section-label anim anim-fade-up d2">RISKS, CHALLENGES &amp; FAILURE MODES</div>
+    <h2 class="slide-title anim anim-fade-up d3" style="font-size:48px;margin:8px 0">What Can Go Wrong<br>With AI Automation</h2>
+    <p class="anim anim-fade-up d4" style="color:#ffffff99;font-size:18px">Real risks teams face when adopting AI skills and agentic workflows at scale.</p>
+  </div>
+  <div class="s6-content" style="margin-top:8px">
+    <div class="s6-grid anim anim-fade-up d5">
+      <div class="s6-col">
+        <div class="s6-card"><div style="color:var(--accent);font-size:28px">⚠️</div><div class="s6-card-title">Context Window Overflow</div><div class="s6-card-desc">Large codebases exceed token limits. AI loses track of dependencies, generates incomplete or conflicting code.</div></div>
+        <div class="s6-card"><div style="color:var(--accent);font-size:28px">🧠</div><div class="s6-card-title">Hallucination at Scale</div><div class="s6-card-desc">AI confidently generates plausible but wrong code. Without guardrails, bugs compound across automated pipelines.</div></div>
+      </div>
+      <div class="s6-col">
+        <div class="s6-card"><div style="color:var(--accent);font-size:28px">🛡️</div><div class="s6-card-title">Security Vulnerabilities</div><div class="s6-card-desc">AI-generated code may introduce injection flaws, exposed secrets, or broken auth without human review.</div></div>
+        <div class="s6-card"><div style="color:var(--accent);font-size:28px">🔀</div><div class="s6-card-title">Skill Drift &amp; Decay</div><div class="s6-card-desc">Skills break silently when APIs, frameworks, or codebase patterns change. No built-in versioning or regression alerts.</div></div>
+      </div>
+      <div class="s6-col">
+        <div class="s6-card"><div style="color:var(--accent);font-size:28px">👥</div><div class="s6-card-title">Team Over-Reliance</div><div class="s6-card-desc">Developers stop understanding their own codebase. When AI fails, nobody knows how to debug.</div></div>
+        <div class="s6-card"><div style="color:var(--accent);font-size:28px">📉</div><div class="s6-card-title">Cost &amp; ROI Uncertainty</div><div class="s6-card-desc">Token costs scale unpredictably. Without measurement, teams can't prove AI automation actually saves money.</div></div>
+      </div>
+    </div>
+    <div class="s6-mit-label anim anim-fade-up d7">MITIGATION STRATEGIES</div>
+    <div class="s6-mit-row anim anim-fade-up d8">
+      <div class="s6-mit-card"><div style="color:var(--accent);font-size:24px">📄</div><div class="s6-mit-title">Plan Mode</div><div class="s6-mit-desc">Discuss until .md plan is generated. Clear context, restart with plan as the only anchor.</div></div>
+      <div class="s6-mit-card"><div style="color:var(--accent);font-size:24px">📐</div><div class="s6-mit-title">Compact (Summarize)</div><div class="s6-mit-desc">Model summarizes history near context limit. Use stronger models to reduce quality loss.</div></div>
+      <div class="s6-mit-card"><div style="color:var(--accent);font-size:24px">🔀</div><div class="s6-mit-title">Sub-Agents</div><div class="s6-mit-desc">Delegate to isolated sub-agents. Each returns structured handoff: results, risks, invariants.</div></div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+
+<!-- ========== SLIDE 7 — Tooling & Self-Evolving Agents ========== -->
+<section class="slide slide-light" id="slide-7">
+  <div class="accent-bar anim anim-fade d1"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
+    <div class="slide-num anim anim-fade d1">07 / 08</div>
+  </div>
+  <div style="padding:0 80px">
+    <div class="section-label anim anim-fade-up d2" style="font-size:14px">TOOLING, KHRYAS TECHNIQUE &amp; SELF-EVOLVING AGENTS</div>
+    <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;color:var(--dark);margin:8px 0">Best Practices for<br>Production Efficiency</h2>
+  </div>
+  <div class="s7-content" style="margin-top:8px">
+    <div class="s7-col anim anim-fade-left d4">
+      <div class="s7-col-title">Recommended Tooling</div>
+      <div class="s7-tool"><div><div class="s7-tool-title" style="color:var(--accent)">💻</div></div><div><div class="s7-tool-title">CLI over UI</div><div class="s7-tool-desc">Use gh, glab CLI tools. Skip MCP servers. Save tokens, stay focused.</div></div></div>
+      <div class="s7-tool"><div><div class="s7-tool-title" style="color:var(--accent)">☁️</div></div><div><div class="s7-tool-title">Cloudflare Markdown</div><div class="s7-tool-desc">Fetch docs as Markdown. Lets the model read external projects cleanly.</div></div></div>
+      <div class="s7-tool"><div><div class="s7-tool-title" style="color:var(--accent)">🖥</div></div><div><div class="s7-tool-title">Model Selection</div><div class="s7-tool-desc">Anthropic for structured work. ~$100/mo balances cost and freedom.</div></div></div>
+    </div>
+    <div class="s7-col anim anim-fade-up d5">
+      <div class="s7-col-title">Prompting Strategies</div>
+      <div class="s7-prompt-card"><div class="s7-prompt-title">Direct File Pointing</div><div class="s7-prompt-desc">Model can't find a file? Point it there directly.</div></div>
+      <div class="s7-prompt-card"><div class="s7-prompt-title">Style References</div><div class="s7-prompt-desc">Link an existing file as a style/logic reference.</div></div>
+      <div class="s7-prompt-card"><div class="s7-prompt-title">Negative Constraints</div><div class="s7-prompt-desc">Say "don't do X because Y" based on past errors.</div></div>
+    </div>
+    <div class="s7-col anim anim-fade-right d6">
+      <div class="s7-col-title">The Khryas Technique</div>
+      <div class="s7-khryas-box">
+        <div style="color:var(--accent);font-size:32px">✂️</div>
+        <div class="s7-khryas-title">Split → Isolate → Reset</div>
+        <div class="s7-khryas-desc">Break failing tasks in half. Generate minimal failing test. Clear context. Restart with only the test as anchor.</div>
+        <div class="s7-phase"><span style="color:var(--accent)">🔍</span> Phase 1: Isolate — strip deps, minimal failing test</div>
+        <div class="s7-phase"><span style="color:var(--accent)">🗑</span> Phase 2: Reset — clear context, provide only the test</div>
+        <div class="s7-phase"><span style="color:var(--green)">✓</span> Phase 3: Fix passes → verified, no hallucination</div>
+      </div>
+      <div class="s7-conclusion">
+        <div class="s7-conclusion-title">🎯 Conclusion</div>
+        <div class="s7-conclusion-desc">Stop writing code. Start defining boundaries. The Khryas split — test first, context second — is the #1 skill for AI development.</div>
+      </div>
+      <div class="s7-self-evolve">
+        <div style="font-size:14px;color:#ffffff99">After each win, update AGENTS.md. Lessons captured automatically for future sessions. The agent teaches itself.</div>
+      </div>
+    </div>
+  </div>
+  <div class="s7-best-bar anim anim-fade-up d7">
+    <div class="s7-best-card"><div style="color:var(--blue)">🔀</div><div><div class="s7-best-title">Version Control Skills</div><div class="s7-best-desc">Git-track every skill change. Review diffs like code.</div></div></div>
+    <div class="s7-best-card"><div style="color:var(--blue)">📊</div><div><div class="s7-best-title">Measure Token Costs</div><div class="s7-best-desc">Track cost per skill run. Optimize prompts for efficiency.</div></div></div>
+    <div class="s7-best-card"><div style="color:var(--blue)">🔄</div><div><div class="s7-best-title">Feedback Loops</div><div class="s7-best-desc">Log failures back into skills. Each bug makes the agent smarter.</div></div></div>
+    <div class="s7-best-card"><div style="color:var(--blue)">🔒</div><div><div class="s7-best-title">Security First</div><div class="s7-best-desc">Sanitize all AI outputs. Never trust generated code blindly.</div></div></div>
+  </div>
+  <div class="bottom-bar" style="color:#B0B0B0">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+
+<!-- ========== SLIDE 8 — Q&A ========== -->
+<section class="slide slide-dark" id="slide-8">
+  <div class="accent-bar-left"></div>
+  <div class="top-bar">
+    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="slide-num anim anim-fade d1">08 / 08</div>
+  </div>
+  <div class="s8-content">
+    <div class="s8-center">
+      <div class="s8-badge anim anim-scale d2">THANK YOU</div>
+      <h1 class="slide-title s8-title anim anim-fade-up d3">Questions &amp;<br>Answers</h1>
+      <div class="s8-divider anim anim-fade d5"></div>
+      <p class="s8-subtitle anim anim-fade-up d6">Let's discuss AI skills, agentic workflows,<br>context management, and the Khryas technique.</p>
+    </div>
+    <div class="s8-right-panel anim anim-fade d7">
+      <div class="s8-question-mark anim anim-scale d8">?</div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span class="copy">code.store</span>
+    <span>Q1 2026 · Executive Presentation</span>
+  </div>
+</section>
+</div>
+
+<!-- Navigation Dots -->
+<div class="nav-dots" id="navDots"></div>
+
+<!-- Keyboard Hint -->
+<div class="key-hint">
+  <kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>1</kbd>-<kbd>8</kbd> jump · <kbd>F</kbd> fullscreen
+</div>
+
+<script>
+  const totalSlides = 8;
+  let currentSlide = 1;
+
+  // Create navigation dots
+  const dotsContainer = document.getElementById('navDots');
+  for (let i = 1; i <= totalSlides; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 1 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function goToSlide(n) {
+    if (n < 1 || n > totalSlides || n === currentSlide) return;
+
+    // Deactivate current
+    const curr = document.getElementById('slide-' + currentSlide);
+    curr.classList.remove('active');
+    // Reset animations
+    curr.querySelectorAll('.anim').forEach(el => {
+      el.style.opacity = '0';
+    });
+
+    currentSlide = n;
+
+    // Activate new
+    const next = document.getElementById('slide-' + currentSlide);
+    next.classList.add('active');
+
+    // Update dots
+    document.querySelectorAll('.nav-dot').forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentSlide - 1);
+    });
+
+    // Update progress bar
+    document.getElementById('progressBar').style.width =
+      ((currentSlide / totalSlides) * 100) + '%';
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    switch(e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case ' ':
+        e.preventDefault();
+        goToSlide(currentSlide + 1);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault();
+        goToSlide(currentSlide - 1);
+        break;
+      case 'f':
+      case 'F':
+        if (!e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else {
+            document.documentElement.requestFullscreen();
+          }
+        }
+        break;
+      default:
+        // Number keys 1-8
+        const num = parseInt(e.key);
+        if (num >= 1 && num <= totalSlides) {
+          goToSlide(num);
+        }
+    }
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) goToSlide(currentSlide + 1);
+      else goToSlide(currentSlide - 1);
+    }
+  });
+
+  // Init progress bar
+  document.getElementById('progressBar').style.width = (100 / totalSlides) + '%';
+</script>
+</body>
+</html>
