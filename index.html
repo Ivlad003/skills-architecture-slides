@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D0D0D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'">
 <title>Strategic Implementation of AI Skills & Agentic Workflows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -30,6 +34,13 @@
     overflow: hidden;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--dark);
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
   }
 
   /* Slide Container */
@@ -100,18 +111,22 @@
   .slide.active .anim-fade.animating { animation: fadeIn 0.5s ease forwards; }
   .slide.active .anim-slide-down.animating { animation: slideDown 0.6s ease forwards; }
 
-  .d1 { animation-delay: 0.1s !important; }
-  .d2 { animation-delay: 0.2s !important; }
-  .d3 { animation-delay: 0.3s !important; }
-  .d4 { animation-delay: 0.4s !important; }
-  .d5 { animation-delay: 0.5s !important; }
-  .d6 { animation-delay: 0.6s !important; }
-  .d7 { animation-delay: 0.7s !important; }
-  .d8 { animation-delay: 0.8s !important; }
-  .d9 { animation-delay: 0.9s !important; }
-  .d10 { animation-delay: 1.0s !important; }
-  .d11 { animation-delay: 1.1s !important; }
-  .d12 { animation-delay: 1.2s !important; }
+  .slide.active .anim.animating.d1 { animation-delay: 0.1s; }
+  .slide.active .anim.animating.d2 { animation-delay: 0.2s; }
+  .slide.active .anim.animating.d3 { animation-delay: 0.3s; }
+  .slide.active .anim.animating.d4 { animation-delay: 0.4s; }
+  .slide.active .anim.animating.d5 { animation-delay: 0.5s; }
+  .slide.active .anim.animating.d6 { animation-delay: 0.6s; }
+  .slide.active .anim.animating.d7 { animation-delay: 0.7s; }
+  .slide.active .anim.animating.d8 { animation-delay: 0.8s; }
+  .slide.active .anim.animating.d9 { animation-delay: 0.9s; }
+  .slide.active .anim.animating.d10 { animation-delay: 1.0s; }
+  .slide.active .anim.animating.d11 { animation-delay: 1.1s; }
+  .slide.active .anim.animating.d12 { animation-delay: 1.2s; }
+
+  /* Animated element optimization */
+  .slide.active .anim.animating { will-change: opacity, transform; }
+  .slide .anim.animated { will-change: auto; }
 
   /* Common Styles */
   .slide-dark { background: var(--dark); color: var(--white); }
@@ -404,9 +419,9 @@
   .s3-level-bar {
     width: 4px; height: 50px; min-width: 4px;
   }
-  .s3-level-5 {
-    background: var(--accent) !important;
-    border-color: var(--accent) !important;
+  .s3-level.s3-level-5 {
+    background: var(--accent);
+    border-color: var(--accent);
     border-width: 2px;
   }
   .s3-level-5 .s3-level-num,
@@ -488,8 +503,8 @@
   .s5-card-desc {
     font-size: 16px; color: var(--gray); line-height: 1.5;
   }
-  .s5-deploy-card {
-    background: var(--accent) !important; border-color: var(--accent) !important;
+  .s5-card.s5-deploy-card {
+    background: var(--accent); border-color: var(--accent);
     justify-content: center;
   }
   .s5-deploy-card .s5-card-desc { color: #ffffffcc; }
@@ -686,6 +701,56 @@
     animation: glowPulse 3s ease-in-out infinite;
   }
 
+  /* Utility classes for extracted inline styles */
+  .text-white { color: var(--white); }
+  .text-dark { color: var(--dark); }
+  .text-muted { color: #0D0D0D99; }
+  .text-muted-light { color: #ffffff99; }
+  .text-accent { color: var(--accent); }
+  .text-blue { color: var(--blue); }
+  .text-green { color: var(--green); }
+  .text-red { color: var(--red); }
+  .bg-accent { background: var(--accent); }
+  .bg-blue { background: var(--blue); }
+  .bg-dark { background: var(--dark); }
+  .bg-green { background: var(--green); }
+  .bg-amber { background: #F59E0B; }
+  .slide-header {
+    padding: 0 80px;
+    flex-shrink: 0;
+  }
+  .slide-header-pt { padding-top: 16px; }
+  .slide-header-pb { padding-bottom: 8px; }
+  .slide-header .slide-title {
+    margin: 8px 0;
+  }
+  .slide-header .slide-subtitle {
+    line-height: 1.5;
+  }
+  .fs-48 { font-size: 48px; }
+  .fs-50 { font-size: 50px; }
+  .fs-54 { font-size: 54px; }
+  .fs-17 { font-size: 17px; }
+  .fs-18 { font-size: 18px; }
+  .fs-20 { font-size: 20px; }
+  .fs-14 { font-size: 14px; }
+  .icon-lg { font-size: 28px; }
+  .icon-xl { font-size: 32px; }
+  .mt-8 { margin-top: 8px; }
+  .mt-4 { margin-top: 4px; }
+  .mt-16 { margin-top: 16px; }
+
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: none; }
+    .slide .anim { opacity: 1; }
+    .slide .anim.animating { animation: none; opacity: 1; }
+    .slide .anim.animated { opacity: 1; }
+    .progress-bar { animation: none; transition: none; }
+    .s3-level, .s5-card, .s6-card { transition: none; }
+    .s8-question-mark { animation: none; }
+  }
+
   /* Responsive */
   @media (max-width: 1200px) {
     .s1-right-panel, .s8-right-panel { display: none; }
@@ -708,14 +773,15 @@
 </head>
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
+<div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="8" aria-label="Slide progress"></div>
+<div aria-live="polite" aria-atomic="true" class="sr-only" id="slideAnnouncer"></div>
 
 <!-- ========== SLIDE 1 — Title ========== -->
-<div class="slides-wrapper">
+<div class="slides-wrapper" role="main">
 <section class="slide slide-dark active" id="slide-1">
   <div class="accent-bar-left"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">01 / 08</div>
   </div>
   <div class="s1-content">
@@ -775,48 +841,48 @@
 <section class="slide slide-light" id="slide-2">
   <div class="accent-bar anim anim-fade d1"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
+    <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">02 / 08</div>
   </div>
-  <div style="padding:0 80px;flex-shrink:0">
+  <div class="slide-header">
     <div class="section-label anim anim-fade-up d2">THE ARCHITECTURE OF CLAUDE SKILLS</div>
-    <h2 class="slide-title anim anim-fade-up d3" style="font-size:48px;color:var(--dark);margin:8px 0">Skills as a Knowledge Layer</h2>
-    <p class="anim anim-fade-up d4" style="color:#0D0D0D99;font-size:17px;line-height:1.5;max-width:1200px">Packaged instructions that teach Claude repeatable recipes — combining built-in capabilities with external tools.</p>
+    <h2 class="slide-title anim anim-fade-up d3 fs-48 text-dark">Skills as a Knowledge Layer</h2>
+    <p class="slide-subtitle anim anim-fade-up d4 text-muted fs-17" style="max-width:1200px">Packaged instructions that teach Claude repeatable recipes — combining built-in capabilities with external tools.</p>
   </div>
-  <div class="s2-content" style="margin-top:16px">
+  <div class="s2-content mt-16">
     <div class="s2-col anim anim-fade-left d5">
       <div class="s2-col-title">Core File Structure</div>
       <div class="s2-table">
         <div class="s2-table-header"><span>Component</span><span>Scope</span><span>Description</span></div>
         <div class="s2-table-row"><span class="comp">SKILL.md</span><span class="scope">required</span><span>Main skill definition with YAML frontmatter</span></div>
-        <div class="s2-table-row"><span class="comp" style="color:var(--dark)">scripts/</span><span class="scope">optional</span><span>Executable code (Python, Bash) for deterministic tasks</span></div>
-        <div class="s2-table-row"><span class="comp" style="color:var(--dark)">references/</span><span class="scope">optional</span><span>Docs, API specs, inspection examples</span></div>
-        <div class="s2-table-row"><span class="comp" style="color:var(--dark)">assets/</span><span class="scope">optional</span><span>Templates, icons, or static files used in output</span></div>
+        <div class="s2-table-row"><span class="comp text-dark">scripts/</span><span class="scope">optional</span><span>Executable code (Python, Bash) for deterministic tasks</span></div>
+        <div class="s2-table-row"><span class="comp text-dark">references/</span><span class="scope">optional</span><span>Docs, API specs, inspection examples</span></div>
+        <div class="s2-table-row"><span class="comp text-dark">assets/</span><span class="scope">optional</span><span>Templates, icons, or static files used in output</span></div>
       </div>
-      <div class="s2-col-title" style="margin-top:8px">Skill Creation Recommendations</div>
-      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--accent)">1</div><div><div class="s2-rec-title">One Skill Per Domain</div><div class="s2-rec-desc">Isolate each skill to a single responsibility — deploy, test, refactor, review.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--accent)">2</div><div><div class="s2-rec-title">Include Real Examples</div><div class="s2-rec-desc">Add working code snippets, CLI commands, and expected outputs.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--accent)">3</div><div><div class="s2-rec-title">Pin Project Conventions</div><div class="s2-rec-desc">Encode naming, folder structure, testing patterns, and commit style.</div></div></div>
-      <div class="s2-col-title" style="margin-top:8px">Agile Skill Lifecycle</div>
+      <div class="s2-col-title mt-8">Skill Creation Recommendations</div>
+      <div class="s2-rec"><div class="s2-rec-num bg-accent">1</div><div><div class="s2-rec-title">One Skill Per Domain</div><div class="s2-rec-desc">Isolate each skill to a single responsibility — deploy, test, refactor, review.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num bg-accent">2</div><div><div class="s2-rec-title">Include Real Examples</div><div class="s2-rec-desc">Add working code snippets, CLI commands, and expected outputs.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num bg-accent">3</div><div><div class="s2-rec-title">Pin Project Conventions</div><div class="s2-rec-desc">Encode naming, folder structure, testing patterns, and commit style.</div></div></div>
+      <div class="s2-col-title mt-8">Agile Skill Lifecycle</div>
       <div class="s2-agile-box">
         <div class="s2-cycle">
-          <span class="s2-cycle-step" style="background:var(--accent)">Draft</span>
-          <span style="color:#0D0D0D40">→</span>
-          <span class="s2-cycle-step" style="background:var(--blue)">Test</span>
-          <span style="color:#0D0D0D40">→</span>
-          <span class="s2-cycle-step" style="background:var(--dark)">Deploy</span>
-          <span style="color:#0D0D0D40">→</span>
-          <span class="s2-cycle-step" style="background:var(--green)">Observe</span>
-          <span style="color:#0D0D0D40">→</span>
-          <span class="s2-cycle-step" style="background:#F59E0B">Iterate</span>
+          <span class="s2-cycle-step bg-accent">Draft</span>
+          <span class="text-muted">→</span>
+          <span class="s2-cycle-step bg-blue">Test</span>
+          <span class="text-muted">→</span>
+          <span class="s2-cycle-step bg-dark">Deploy</span>
+          <span class="text-muted">→</span>
+          <span class="s2-cycle-step bg-green">Observe</span>
+          <span class="text-muted">→</span>
+          <span class="s2-cycle-step bg-amber">Iterate</span>
         </div>
-        <p style="color:#0D0D0D99;font-size:15px;line-height:1.4;margin-top:8px">Treat skills like sprints. Ship small, measure results, improve weekly.</p>
+        <p class="text-muted mt-8" style="font-size:15px;line-height:1.4">Treat skills like sprints. Ship small, measure results, improve weekly.</p>
       </div>
-      <div class="s2-auto-box" style="margin-top:4px">
-        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px"><span style="color:var(--blue)">🔄</span><span class="s2-auto-title">Auto-Update Strategy</span></div>
-        <div class="s2-auto-item"><span style="color:var(--blue)">✓</span> CI hooks detect skill drift — auto-flag when APIs change</div>
-        <div class="s2-auto-item" style="margin-top:4px"><span style="color:var(--blue)">✓</span> Agent logs feed back — failures auto-generate skill improvement PRs</div>
-        <div class="s2-auto-item" style="margin-top:4px"><span style="color:var(--blue)">✓</span> Scheduled re-validation — weekly test runs catch silent regressions</div>
+      <div class="s2-auto-box mt-4">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px"><span class="text-blue">🔄</span><span class="s2-auto-title">Auto-Update Strategy</span></div>
+        <div class="s2-auto-item"><span class="text-blue">✓</span> CI hooks detect skill drift — auto-flag when APIs change</div>
+        <div class="s2-auto-item mt-4"><span class="text-blue">✓</span> Agent logs feed back — failures auto-generate skill improvement PRs</div>
+        <div class="s2-auto-item mt-4"><span class="text-blue">✓</span> Scheduled re-validation — weekly test runs catch silent regressions</div>
       </div>
     </div>
     <div class="s2-col anim anim-fade-right d6">
@@ -825,11 +891,11 @@
       <div class="s2-level"><span class="s2-level-num">L2</span><div><div class="s2-level-title">SKILL.md Body</div><div class="s2-level-desc">Loaded only when Claude identifies the skill as relevant to the user's request.</div></div></div>
       <div class="s2-level"><span class="s2-level-num">L3</span><div><div class="s2-level-title">Linked Files</div><div class="s2-level-desc">On-the-fly: Claude pulls in any extra task-specific details.</div></div></div>
       <div class="s2-mcp-box"><span>🔌</span><span>Synergy with MCP — APIs, file systems, DBs, other services. Together they build fully integrated workflows.</span></div>
-      <div class="s2-col-title" style="margin-top:8px">Best Practices</div>
-      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--blue)">4</div><div><div class="s2-rec-title">Version &amp; Test Skills</div><div class="s2-rec-desc">Treat skills like code — git versioning, peer review, and automated validation.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--blue)">5</div><div><div class="s2-rec-title">Use Progressive Disclosure</div><div class="s2-rec-desc">Keep YAML frontmatter minimal. Load heavy context only when triggered.</div></div></div>
-      <div class="s2-rec"><div class="s2-rec-num" style="background:var(--blue)">6</div><div><div class="s2-rec-title">Bind to Project Stack</div><div class="s2-rec-desc">Reference your actual frameworks, ORMs, CI tools. A Django skill for a Django project beats a generic Python skill.</div></div></div>
-      <div class="s2-mcp-box" style="margin-top:4px"><span>💡</span><span>Start with 3 skills: deploy, test, and review. Expand only after these are proven and adopted by the team.</span></div>
+      <div class="s2-col-title mt-8">Best Practices</div>
+      <div class="s2-rec"><div class="s2-rec-num bg-blue">4</div><div><div class="s2-rec-title">Version &amp; Test Skills</div><div class="s2-rec-desc">Treat skills like code — git versioning, peer review, and automated validation.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num bg-blue">5</div><div><div class="s2-rec-title">Use Progressive Disclosure</div><div class="s2-rec-desc">Keep YAML frontmatter minimal. Load heavy context only when triggered.</div></div></div>
+      <div class="s2-rec"><div class="s2-rec-num bg-blue">6</div><div><div class="s2-rec-title">Bind to Project Stack</div><div class="s2-rec-desc">Reference your actual frameworks, ORMs, CI tools. A Django skill for a Django project beats a generic Python skill.</div></div></div>
+      <div class="s2-mcp-box mt-4"><span>💡</span><span>Start with 3 skills: deploy, test, and review. Expand only after these are proven and adopted by the team.</span></div>
     </div>
   </div>
   <div class="bottom-bar" style="color:#B0B0B0">
@@ -842,17 +908,17 @@
 <section class="slide slide-dark" id="slide-3">
   <div class="accent-bar anim anim-fade d1"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">03 / 08</div>
   </div>
-  <div style="padding:16px 80px 0;flex-shrink:0">
+  <div class="slide-header slide-header-pt">
     <div class="section-label anim anim-fade-up d2">THE FIVE LEVELS OF AI AUTOMATION</div>
-    <h2 class="slide-title anim anim-fade-up d3" style="font-size:54px;margin:8px 0">From Autocomplete to<br>Dark Software Factory</h2>
-    <p class="slide-subtitle anim anim-fade-up d4" style="color:var(--gray);font-size:20px">The industry is moving from Level 1 toward Levels 4–5. Higher levels bring new cognitive and architectural challenges.</p>
+    <h2 class="slide-title anim anim-fade-up d3 fs-54">From Autocomplete to<br>Dark Software Factory</h2>
+    <p class="slide-subtitle anim anim-fade-up d4 fs-20" style="color:var(--gray)">The industry is moving from Level 1 toward Levels 4–5. Higher levels bring new cognitive and architectural challenges.</p>
   </div>
   <div class="s3-content" style="flex:1;padding:16px 80px;overflow:hidden">
     <div class="s3-levels">
-      <div class="s3-level anim anim-fade-left d5">
+      <div class="s3-level anim anim-fade-left d5" role="listitem">
         <span class="s3-level-num" style="color:#DF0D6130">01</span>
         <div class="s3-level-info"><div class="s3-level-title">Autocomplete</div><div class="s3-level-sub">Smart Suggestions</div></div>
         <div class="s3-level-desc">AI suggests code snippets. Nothing hits disk without human approval.</div>
@@ -894,60 +960,60 @@
 <section class="slide slide-light" id="slide-4">
   <div class="accent-bar anim anim-fade d1"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
+    <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">04 / 08</div>
   </div>
-  <div style="padding:0 80px;flex-shrink:0">
+  <div class="slide-header">
     <div class="section-label anim anim-fade-up d2">BROWNFIELD VS GREENFIELD</div>
-    <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;color:var(--dark);margin:8px 0">Two Paths to AI Implementation</h2>
-    <p class="anim anim-fade-up d4" style="color:#0D0D0D99;font-size:18px;line-height:1.5">Retrofit AI into legacy systems or build AI-native from scratch. Each path has trade-offs.</p>
+    <h2 class="slide-title anim anim-fade-up d3 fs-50 text-dark">Two Paths to AI Implementation</h2>
+    <p class="slide-subtitle anim anim-fade-up d4 text-muted fs-18">Retrofit AI into legacy systems or build AI-native from scratch. Each path has trade-offs.</p>
   </div>
-  <div class="s4-content" style="margin-top:16px">
+  <div class="s4-content mt-16">
     <div class="s4-cols">
       <div class="s4-col anim anim-fade-left d5">
-        <div class="s4-col-header" style="background:var(--accent)">🏢 Brownfield</div>
+        <div class="s4-col-header bg-accent">🏢 Brownfield</div>
         <div class="s4-col-body" style="background:#FFF0F3">
           <p class="desc">Retrofit AI into existing codebase, legacy systems, and established workflows.</p>
-          <div class="s4-section-label" style="color:var(--green)">PROS</div>
-          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Existing users, revenue, and proven business logic</div>
-          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Incremental adoption — no big-bang migration</div>
-          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Real production data to train and validate skills</div>
+          <div class="s4-section-label text-green">PROS</div>
+          <div class="s4-item"><span class="icon text-green">✓</span> Existing users, revenue, and proven business logic</div>
+          <div class="s4-item"><span class="icon text-green">✓</span> Incremental adoption — no big-bang migration</div>
+          <div class="s4-item"><span class="icon text-green">✓</span> Real production data to train and validate skills</div>
           <div class="s4-divider"></div>
-          <div class="s4-section-label" style="color:var(--red)">CONS</div>
-          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Legacy code fights AI context limits</div>
-          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Technical debt slows AI skill adoption</div>
-          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Team resistance to changing established patterns</div>
+          <div class="s4-section-label text-red">CONS</div>
+          <div class="s4-item"><span class="icon text-red">✗</span> Legacy code fights AI context limits</div>
+          <div class="s4-item"><span class="icon text-red">✗</span> Technical debt slows AI skill adoption</div>
+          <div class="s4-item"><span class="icon text-red">✗</span> Team resistance to changing established patterns</div>
           <div class="s4-divider"></div>
-          <div class="s4-section-label" style="color:var(--accent)">WHAT TO DO</div>
-          <div class="s4-item"><span class="icon" style="color:var(--accent)">🔍</span> Audit legacy code — map AI-ready vs refactor-first modules</div>
-          <div class="s4-item"><span class="icon" style="color:var(--accent)">📦</span> Start with L1 skills on isolated services, expand gradually</div>
-          <div class="s4-item"><span class="icon" style="color:var(--accent)">🛡</span> Add guardrails — validate AI output against existing tests</div>
-          <div class="s4-item"><span class="icon" style="color:var(--accent)">🔀</span> Use feature flags to A/B test AI skills vs manual workflows</div>
+          <div class="s4-section-label text-accent">WHAT TO DO</div>
+          <div class="s4-item"><span class="icon text-accent">🔍</span> Audit legacy code — map AI-ready vs refactor-first modules</div>
+          <div class="s4-item"><span class="icon text-accent">📦</span> Start with L1 skills on isolated services, expand gradually</div>
+          <div class="s4-item"><span class="icon text-accent">🛡</span> Add guardrails — validate AI output against existing tests</div>
+          <div class="s4-item"><span class="icon text-accent">🔀</span> Use feature flags to A/B test AI skills vs manual workflows</div>
           <div class="s4-divider"></div>
-          <div class="s4-section-label" style="color:var(--accent)">DEPLOYMENT BOTTLENECK</div>
-          <div class="s4-item"><span class="icon" style="color:var(--accent)">⏱</span> CI/CD pipelines can take hours with high flaky-test failure rates</div>
-          <div class="s4-item"><span class="icon" style="color:var(--accent)">📡</span> Build predictive testing — map changed files to relevant test suites only</div>
+          <div class="s4-section-label text-accent">DEPLOYMENT BOTTLENECK</div>
+          <div class="s4-item"><span class="icon text-accent">⏱</span> CI/CD pipelines can take hours with high flaky-test failure rates</div>
+          <div class="s4-item"><span class="icon text-accent">📡</span> Build predictive testing — map changed files to relevant test suites only</div>
         </div>
       </div>
       <div class="s4-col anim anim-fade-right d6">
-        <div class="s4-col-header" style="background:var(--blue)">🌱 Greenfield</div>
+        <div class="s4-col-header bg-blue">🌱 Greenfield</div>
         <div class="s4-col-body" style="background:#F0F0FF">
           <p class="desc">Build AI-native from day one with agentic architecture, clean skill layers, and no legacy constraints.</p>
-          <div class="s4-section-label" style="color:var(--green)">PROS</div>
-          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> AI-first architecture — skills, agents, MCP built in</div>
-          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Reach Level 3+ automation 3x faster</div>
-          <div class="s4-item"><span class="icon" style="color:var(--green)">✓</span> Clean context pipelines — no legacy noise</div>
+          <div class="s4-section-label text-green">PROS</div>
+          <div class="s4-item"><span class="icon text-green">✓</span> AI-first architecture — skills, agents, MCP built in</div>
+          <div class="s4-item"><span class="icon text-green">✓</span> Reach Level 3+ automation 3x faster</div>
+          <div class="s4-item"><span class="icon text-green">✓</span> Clean context pipelines — no legacy noise</div>
           <div class="s4-divider"></div>
-          <div class="s4-section-label" style="color:var(--red)">CONS</div>
-          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> No existing users, revenue, or market validation</div>
-          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Higher upfront investment before any return</div>
-          <div class="s4-item"><span class="icon" style="color:var(--red)">✗</span> Risk of over-engineering without real-world feedback</div>
+          <div class="s4-section-label text-red">CONS</div>
+          <div class="s4-item"><span class="icon text-red">✗</span> No existing users, revenue, or market validation</div>
+          <div class="s4-item"><span class="icon text-red">✗</span> Higher upfront investment before any return</div>
+          <div class="s4-item"><span class="icon text-red">✗</span> Risk of over-engineering without real-world feedback</div>
           <div class="s4-divider"></div>
-          <div class="s4-section-label" style="color:var(--blue)">WHAT TO DO</div>
-          <div class="s4-item"><span class="icon" style="color:var(--blue)">📐</span> Design skill layers first — define L1/L2/L3 from the start</div>
-          <div class="s4-item"><span class="icon" style="color:var(--blue)">⚡</span> Build MCP-native architecture — agents and tools as first-class</div>
-          <div class="s4-item"><span class="icon" style="color:var(--blue)">🧪</span> Ship MVP fast — validate with real users before scaling skills</div>
-          <div class="s4-item"><span class="icon" style="color:var(--blue)">🔄</span> Set up CI/CD for skills — auto-test, version, and deploy iteratively</div>
+          <div class="s4-section-label text-blue">WHAT TO DO</div>
+          <div class="s4-item"><span class="icon text-blue">📐</span> Design skill layers first — define L1/L2/L3 from the start</div>
+          <div class="s4-item"><span class="icon text-blue">⚡</span> Build MCP-native architecture — agents and tools as first-class</div>
+          <div class="s4-item"><span class="icon text-blue">🧪</span> Ship MVP fast — validate with real users before scaling skills</div>
+          <div class="s4-item"><span class="icon text-blue">🔄</span> Set up CI/CD for skills — auto-test, version, and deploy iteratively</div>
         </div>
       </div>
     </div>
@@ -962,12 +1028,12 @@
 <section class="slide slide-dark" id="slide-5">
   <div class="accent-bar anim anim-fade d1"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">05 / 08</div>
   </div>
-  <div style="padding:0 80px 8px;flex-shrink:0">
+  <div class="slide-header slide-header-pb">
     <div class="section-label anim anim-fade-up d2">PATTERNS FOR SUCCESSFUL SKILL DESIGN</div>
-    <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;margin:8px 0">Repeatable Patterns for<br>Production-Grade Skills</h2>
+    <h2 class="slide-title anim anim-fade-up d3 fs-50">Repeatable Patterns for<br>Production-Grade Skills</h2>
   </div>
   <div class="s5-content">
     <div class="s5-cards-grid s5-top-row anim anim-fade-up d4">
@@ -978,7 +1044,7 @@
     <div class="s5-cards-grid s5-bottom-row anim anim-fade-up d5">
       <div class="s5-card"><div class="s5-card-num">04</div><div class="s5-card-title">Context-Aware Tool Selection</div><div class="s5-card-desc">AI picks the right tool for the job — cloud storage for big files, Notion for collaboration.</div></div>
       <div class="s5-card"><div class="s5-card-num">05</div><div class="s5-card-title">Domain-Specific Intelligence</div><div class="s5-card-desc">Embed domain rules (compliance, security) that must run before any tool is called.</div></div>
-      <div class="s5-card s5-deploy-card"><div style="font-size:32px">⚙️</div><div class="s5-card-title">Deployment</div><div class="s5-card-desc">Host on GitHub with README. Provide .zip for Claude.ai. Admins deploy workspace-wide.</div></div>
+      <div class="s5-card s5-deploy-card"><div class="icon-xl">⚙️</div><div class="s5-card-title">Deployment</div><div class="s5-card-desc">Host on GitHub with README. Provide .zip for Claude.ai. Admins deploy workspace-wide.</div></div>
     </div>
     <div class="s5-feature-row anim anim-fade-up d6">
       <div class="s5-feature-card red">
@@ -1018,34 +1084,34 @@
 <section class="slide slide-dark" id="slide-6">
   <div class="accent-bar anim anim-fade d1"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">06 / 08</div>
   </div>
-  <div style="padding:0 80px;flex-shrink:0">
+  <div class="slide-header">
     <div class="section-label anim anim-fade-up d2">RISKS, CHALLENGES &amp; FAILURE MODES</div>
-    <h2 class="slide-title anim anim-fade-up d3" style="font-size:48px;margin:8px 0">What Can Go Wrong<br>With AI Automation</h2>
-    <p class="anim anim-fade-up d4" style="color:#ffffff99;font-size:18px">Real risks teams face when adopting AI skills and agentic workflows at scale.</p>
+    <h2 class="slide-title anim anim-fade-up d3 fs-48">What Can Go Wrong<br>With AI Automation</h2>
+    <p class="slide-subtitle anim anim-fade-up d4 text-muted-light fs-18">Real risks teams face when adopting AI skills and agentic workflows at scale.</p>
   </div>
-  <div class="s6-content" style="margin-top:8px">
+  <div class="s6-content mt-8">
     <div class="s6-grid anim anim-fade-up d5">
       <div class="s6-col">
-        <div class="s6-card"><div style="color:var(--accent);font-size:28px">⚠️</div><div class="s6-card-title">Context Window Overflow</div><div class="s6-card-desc">Large codebases exceed token limits. AI loses track of dependencies, generates incomplete or conflicting code.</div></div>
-        <div class="s6-card"><div style="color:var(--accent);font-size:28px">🧠</div><div class="s6-card-title">Hallucination at Scale</div><div class="s6-card-desc">AI confidently generates plausible but wrong code. Without guardrails, bugs compound across automated pipelines.</div></div>
+        <div class="s6-card"><div class="text-accent icon-lg">⚠️</div><div class="s6-card-title">Context Window Overflow</div><div class="s6-card-desc">Large codebases exceed token limits. AI loses track of dependencies, generates incomplete or conflicting code.</div></div>
+        <div class="s6-card"><div class="text-accent icon-lg">🧠</div><div class="s6-card-title">Hallucination at Scale</div><div class="s6-card-desc">AI confidently generates plausible but wrong code. Without guardrails, bugs compound across automated pipelines.</div></div>
       </div>
       <div class="s6-col">
-        <div class="s6-card"><div style="color:var(--accent);font-size:28px">🛡️</div><div class="s6-card-title">Security Vulnerabilities</div><div class="s6-card-desc">AI-generated code may introduce injection flaws, exposed secrets, or broken auth without human review.</div></div>
-        <div class="s6-card"><div style="color:var(--accent);font-size:28px">🔀</div><div class="s6-card-title">Skill Drift &amp; Decay</div><div class="s6-card-desc">Skills break silently when APIs, frameworks, or codebase patterns change. No built-in versioning or regression alerts.</div></div>
+        <div class="s6-card"><div class="text-accent icon-lg">🛡️</div><div class="s6-card-title">Security Vulnerabilities</div><div class="s6-card-desc">AI-generated code may introduce injection flaws, exposed secrets, or broken auth without human review.</div></div>
+        <div class="s6-card"><div class="text-accent icon-lg">🔀</div><div class="s6-card-title">Skill Drift &amp; Decay</div><div class="s6-card-desc">Skills break silently when APIs, frameworks, or codebase patterns change. No built-in versioning or regression alerts.</div></div>
       </div>
       <div class="s6-col">
-        <div class="s6-card"><div style="color:var(--accent);font-size:28px">👥</div><div class="s6-card-title">Team Over-Reliance</div><div class="s6-card-desc">Developers stop understanding their own codebase. When AI fails, nobody knows how to debug.</div></div>
-        <div class="s6-card"><div style="color:var(--accent);font-size:28px">📉</div><div class="s6-card-title">Cost &amp; ROI Uncertainty</div><div class="s6-card-desc">Token costs scale unpredictably. Without measurement, teams can't prove AI automation actually saves money.</div></div>
+        <div class="s6-card"><div class="text-accent icon-lg">👥</div><div class="s6-card-title">Team Over-Reliance</div><div class="s6-card-desc">Developers stop understanding their own codebase. When AI fails, nobody knows how to debug.</div></div>
+        <div class="s6-card"><div class="text-accent icon-lg">📉</div><div class="s6-card-title">Cost &amp; ROI Uncertainty</div><div class="s6-card-desc">Token costs scale unpredictably. Without measurement, teams can't prove AI automation actually saves money.</div></div>
       </div>
     </div>
     <div class="s6-mit-label anim anim-fade-up d7">MITIGATION STRATEGIES</div>
     <div class="s6-mit-row anim anim-fade-up d8">
-      <div class="s6-mit-card"><div style="color:var(--accent);font-size:24px">📄</div><div class="s6-mit-title">Plan Mode</div><div class="s6-mit-desc">Discuss until .md plan is generated. Clear context, restart with plan as the only anchor.</div></div>
-      <div class="s6-mit-card"><div style="color:var(--accent);font-size:24px">📐</div><div class="s6-mit-title">Compact (Summarize)</div><div class="s6-mit-desc">Model summarizes history near context limit. Use stronger models to reduce quality loss.</div></div>
-      <div class="s6-mit-card"><div style="color:var(--accent);font-size:24px">🔀</div><div class="s6-mit-title">Sub-Agents</div><div class="s6-mit-desc">Delegate to isolated sub-agents. Each returns structured handoff: results, risks, invariants.</div></div>
+      <div class="s6-mit-card"><div class="text-accent" style="font-size:24px">📄</div><div class="s6-mit-title">Plan Mode</div><div class="s6-mit-desc">Discuss until .md plan is generated. Clear context, restart with plan as the only anchor.</div></div>
+      <div class="s6-mit-card"><div class="text-accent" style="font-size:24px">📐</div><div class="s6-mit-title">Compact (Summarize)</div><div class="s6-mit-desc">Model summarizes history near context limit. Use stronger models to reduce quality loss.</div></div>
+      <div class="s6-mit-card"><div class="text-accent" style="font-size:24px">🔀</div><div class="s6-mit-title">Sub-Agents</div><div class="s6-mit-desc">Delegate to isolated sub-agents. Each returns structured handoff: results, risks, invariants.</div></div>
     </div>
   </div>
   <div class="bottom-bar">
@@ -1058,19 +1124,19 @@
 <section class="slide slide-light" id="slide-7">
   <div class="accent-bar anim anim-fade d1"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:var(--dark)">code.store</div>
+    <div class="logo anim anim-fade d1 text-dark">code.store</div>
     <div class="slide-num anim anim-fade d1">07 / 08</div>
   </div>
-  <div style="padding:0 80px;flex-shrink:0">
-    <div class="section-label anim anim-fade-up d2" style="font-size:14px">TOOLING, KHRYAS TECHNIQUE &amp; SELF-EVOLVING AGENTS</div>
-    <h2 class="slide-title anim anim-fade-up d3" style="font-size:50px;color:var(--dark);margin:8px 0">Best Practices for<br>Production Efficiency</h2>
+  <div class="slide-header">
+    <div class="section-label anim anim-fade-up d2 fs-14">TOOLING, KHRYAS TECHNIQUE &amp; SELF-EVOLVING AGENTS</div>
+    <h2 class="slide-title anim anim-fade-up d3 fs-50 text-dark">Best Practices for<br>Production Efficiency</h2>
   </div>
-  <div class="s7-content" style="margin-top:8px">
+  <div class="s7-content mt-8">
     <div class="s7-col anim anim-fade-left d4">
       <div class="s7-col-title">Recommended Tooling</div>
-      <div class="s7-tool"><div><div class="s7-tool-title" style="color:var(--accent)">💻</div></div><div><div class="s7-tool-title">CLI over UI</div><div class="s7-tool-desc">Use gh, glab CLI tools. Skip MCP servers. Save tokens, stay focused.</div></div></div>
-      <div class="s7-tool"><div><div class="s7-tool-title" style="color:var(--accent)">☁️</div></div><div><div class="s7-tool-title">Cloudflare Markdown</div><div class="s7-tool-desc">Fetch docs as Markdown. Lets the model read external projects cleanly.</div></div></div>
-      <div class="s7-tool"><div><div class="s7-tool-title" style="color:var(--accent)">🖥</div></div><div><div class="s7-tool-title">Model Selection</div><div class="s7-tool-desc">Anthropic for structured work. ~$100/mo balances cost and freedom.</div></div></div>
+      <div class="s7-tool"><div><div class="s7-tool-title text-accent">💻</div></div><div><div class="s7-tool-title">CLI over UI</div><div class="s7-tool-desc">Use gh, glab CLI tools. Skip MCP servers. Save tokens, stay focused.</div></div></div>
+      <div class="s7-tool"><div><div class="s7-tool-title text-accent">☁️</div></div><div><div class="s7-tool-title">Cloudflare Markdown</div><div class="s7-tool-desc">Fetch docs as Markdown. Lets the model read external projects cleanly.</div></div></div>
+      <div class="s7-tool"><div><div class="s7-tool-title text-accent">🖥</div></div><div><div class="s7-tool-title">Model Selection</div><div class="s7-tool-desc">Anthropic for structured work. ~$100/mo balances cost and freedom.</div></div></div>
     </div>
     <div class="s7-col anim anim-fade-up d5">
       <div class="s7-col-title">Prompting Strategies</div>
@@ -1081,27 +1147,27 @@
     <div class="s7-col anim anim-fade-right d6">
       <div class="s7-col-title">The Khryas Technique</div>
       <div class="s7-khryas-box">
-        <div style="color:var(--accent);font-size:32px">✂️</div>
+        <div class="text-accent icon-xl">✂️</div>
         <div class="s7-khryas-title">Split → Isolate → Reset</div>
         <div class="s7-khryas-desc">Break failing tasks in half. Generate minimal failing test. Clear context. Restart with only the test as anchor.</div>
-        <div class="s7-phase"><span style="color:var(--accent)">🔍</span> Phase 1: Isolate — strip deps, minimal failing test</div>
-        <div class="s7-phase"><span style="color:var(--accent)">🗑</span> Phase 2: Reset — clear context, provide only the test</div>
-        <div class="s7-phase"><span style="color:var(--green)">✓</span> Phase 3: Fix passes → verified, no hallucination</div>
+        <div class="s7-phase"><span class="text-accent">🔍</span> Phase 1: Isolate — strip deps, minimal failing test</div>
+        <div class="s7-phase"><span class="text-accent">🗑</span> Phase 2: Reset — clear context, provide only the test</div>
+        <div class="s7-phase"><span class="text-green">✓</span> Phase 3: Fix passes → verified, no hallucination</div>
       </div>
       <div class="s7-conclusion">
         <div class="s7-conclusion-title">🎯 Conclusion</div>
         <div class="s7-conclusion-desc">Stop writing code. Start defining boundaries. The Khryas split — test first, context second — is the #1 skill for AI development.</div>
       </div>
       <div class="s7-self-evolve">
-        <div style="font-size:14px;color:#ffffff99">After each win, update AGENTS.md. Lessons captured automatically for future sessions. The agent teaches itself.</div>
+        <div class="text-muted-light fs-14">After each win, update AGENTS.md. Lessons captured automatically for future sessions. The agent teaches itself.</div>
       </div>
     </div>
   </div>
   <div class="s7-best-bar anim anim-fade-up d7">
-    <div class="s7-best-card"><div style="color:var(--blue)">🔀</div><div><div class="s7-best-title">Version Control Skills</div><div class="s7-best-desc">Git-track every skill change. Review diffs like code.</div></div></div>
-    <div class="s7-best-card"><div style="color:var(--blue)">📊</div><div><div class="s7-best-title">Measure Token Costs</div><div class="s7-best-desc">Track cost per skill run. Optimize prompts for efficiency.</div></div></div>
-    <div class="s7-best-card"><div style="color:var(--blue)">🔄</div><div><div class="s7-best-title">Feedback Loops</div><div class="s7-best-desc">Log failures back into skills. Each bug makes the agent smarter.</div></div></div>
-    <div class="s7-best-card"><div style="color:var(--blue)">🔒</div><div><div class="s7-best-title">Security First</div><div class="s7-best-desc">Sanitize all AI outputs. Never trust generated code blindly.</div></div></div>
+    <div class="s7-best-card"><div class="text-blue">🔀</div><div><div class="s7-best-title">Version Control Skills</div><div class="s7-best-desc">Git-track every skill change. Review diffs like code.</div></div></div>
+    <div class="s7-best-card"><div class="text-blue">📊</div><div><div class="s7-best-title">Measure Token Costs</div><div class="s7-best-desc">Track cost per skill run. Optimize prompts for efficiency.</div></div></div>
+    <div class="s7-best-card"><div class="text-blue">🔄</div><div><div class="s7-best-title">Feedback Loops</div><div class="s7-best-desc">Log failures back into skills. Each bug makes the agent smarter.</div></div></div>
+    <div class="s7-best-card"><div class="text-blue">🔒</div><div><div class="s7-best-title">Security First</div><div class="s7-best-desc">Sanitize all AI outputs. Never trust generated code blindly.</div></div></div>
   </div>
   <div class="bottom-bar" style="color:#B0B0B0">
     <span class="copy">code.store</span>
@@ -1113,7 +1179,7 @@
 <section class="slide slide-dark" id="slide-8">
   <div class="accent-bar-left"></div>
   <div class="top-bar">
-    <div class="logo anim anim-fade d1" style="color:white">code.store</div>
+    <div class="logo anim anim-fade d1 text-white">code.store</div>
     <div class="slide-num anim anim-fade d1">08 / 08</div>
   </div>
   <div class="s8-content">
@@ -1135,7 +1201,7 @@
 </div>
 
 <!-- Navigation Dots -->
-<div class="nav-dots" id="navDots"></div>
+<nav class="nav-dots" id="navDots" role="tablist" aria-label="Slide navigation"></nav>
 
 <!-- Keyboard Hint -->
 <div class="key-hint">
@@ -1145,18 +1211,23 @@
 <script>
   const totalSlides = 8;
   let currentSlide = 1;
+  const ANIMATION_FALLBACK_MS = 2000;
 
-  // Create navigation dots
+  // Create navigation dots with accessible labels
   const dotsContainer = document.getElementById('navDots');
+  const slideNames = ['Title', 'Skills Architecture', 'Five Levels', 'Brownfield vs Greenfield', 'Skill Design Patterns', 'Risks & Problems', 'Tooling & Best Practices', 'Q&A'];
   for (let i = 1; i <= totalSlides; i++) {
     const dot = document.createElement('button');
     dot.className = 'nav-dot' + (i === 1 ? ' active' : '');
+    dot.setAttribute('role', 'tab');
+    dot.setAttribute('aria-label', 'Slide ' + i + ': ' + slideNames[i - 1]);
+    dot.setAttribute('aria-selected', i === 1 ? 'true' : 'false');
     dot.addEventListener('click', () => goToSlide(i));
     dotsContainer.appendChild(dot);
   }
 
   // Track which slides have been animated
-  const animatedSlides = new Set([1]);
+  const animatedSlides = new Set();
 
   function animateSlide(slide) {
     const slideId = parseInt(slide.id.split('-')[1]);
@@ -1166,8 +1237,15 @@
     const anims = slide.querySelectorAll('.anim');
     anims.forEach(el => {
       el.classList.add('animating');
-      // After animation ends, lock the visible state and remove animating
+
+      // Fallback timeout in case animationend never fires
+      const fallbackTimer = setTimeout(() => {
+        el.classList.remove('animating');
+        el.classList.add('animated');
+      }, ANIMATION_FALLBACK_MS);
+
       el.addEventListener('animationend', () => {
+        clearTimeout(fallbackTimer);
         el.classList.remove('animating');
         el.classList.add('animated');
       }, { once: true });
@@ -1190,18 +1268,28 @@
     // Animate elements (only first time)
     animateSlide(next);
 
-    // Update dots
+    // Update dots (ARIA)
     document.querySelectorAll('.nav-dot').forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === currentSlide - 1);
+      const isActive = idx === currentSlide - 1;
+      dot.classList.toggle('active', isActive);
+      dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
 
     // Update progress bar
-    document.getElementById('progressBar').style.width =
-      ((currentSlide / totalSlides) * 100) + '%';
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.width = ((currentSlide / totalSlides) * 100) + '%';
+    progressBar.setAttribute('aria-valuenow', currentSlide);
+
+    // Announce slide change for screen readers
+    document.getElementById('slideAnnouncer').textContent =
+      'Slide ' + currentSlide + ' of ' + totalSlides + ': ' + slideNames[currentSlide - 1];
   }
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
+    // Don't handle Space if focus is on an interactive element
+    if (e.key === ' ' && e.target.tagName === 'BUTTON') return;
+
     switch(e.key) {
       case 'ArrowRight':
       case 'ArrowDown':
@@ -1218,15 +1306,20 @@
       case 'F':
         if (!e.ctrlKey && !e.metaKey) {
           e.preventDefault();
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-          } else {
-            document.documentElement.requestFullscreen();
+          try {
+            if (document.fullscreenElement) {
+              document.exitFullscreen();
+            } else if (document.documentElement.requestFullscreen) {
+              document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+              document.documentElement.webkitRequestFullscreen();
+            }
+          } catch (err) {
+            // Fullscreen not supported or denied
           }
         }
         break;
       default:
-        // Number keys 1-8
         const num = parseInt(e.key);
         if (num >= 1 && num <= totalSlides) {
           goToSlide(num);
@@ -1234,13 +1327,13 @@
     }
   });
 
-  // Touch swipe support
+  // Touch swipe support with passive listeners
   let touchStartX = 0;
   let touchStartY = 0;
   document.addEventListener('touchstart', (e) => {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
-  });
+  }, { passive: true });
   document.addEventListener('touchend', (e) => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
@@ -1248,20 +1341,11 @@
       if (dx < 0) goToSlide(currentSlide + 1);
       else goToSlide(currentSlide - 1);
     }
-  });
+  }, { passive: true });
 
-  // Init progress bar
+  // Init progress bar and animate first slide (reuse animateSlide)
   document.getElementById('progressBar').style.width = (100 / totalSlides) + '%';
-
-  // Animate first slide on load
-  const firstSlide = document.getElementById('slide-1');
-  firstSlide.querySelectorAll('.anim').forEach(el => {
-    el.classList.add('animating');
-    el.addEventListener('animationend', () => {
-      el.classList.remove('animating');
-      el.classList.add('animated');
-    }, { once: true });
-  });
+  animateSlide(document.getElementById('slide-1'));
 </script>
 </body>
 </html>
