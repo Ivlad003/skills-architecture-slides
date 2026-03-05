@@ -1266,16 +1266,13 @@
     dotsContainer.appendChild(dot);
   }
 
-  // Track which slides have been animated
-  const animatedSlides = new Set();
-
   function animateSlide(slide) {
-    const slideId = parseInt(slide.id.split('-')[1]);
-    if (animatedSlides.has(slideId)) return;
-    animatedSlides.add(slideId);
-
     const anims = slide.querySelectorAll('.anim');
     anims.forEach(el => {
+      // Reset previous animation state
+      el.classList.remove('animating', 'animated');
+      // Force reflow so browser restarts the animation
+      void el.offsetWidth;
       el.classList.add('animating');
 
       // Fallback timeout in case animationend never fires
@@ -1295,9 +1292,12 @@
   function goToSlide(n) {
     if (n < 1 || n > totalSlides || n === currentSlide) return;
 
-    // Deactivate current
+    // Deactivate current and reset its animations
     const curr = document.getElementById('slide-' + currentSlide);
     curr.classList.remove('active');
+    curr.querySelectorAll('.anim').forEach(el => {
+      el.classList.remove('animating', 'animated');
+    });
 
     currentSlide = n;
 
@@ -1305,7 +1305,7 @@
     const next = document.getElementById('slide-' + currentSlide);
     next.classList.add('active');
 
-    // Animate elements (only first time)
+    // Animate elements
     animateSlide(next);
 
     // Update dots (ARIA)
